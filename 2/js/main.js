@@ -1,43 +1,29 @@
-// вспомогательная функция  - проверяет входные данные
-const prepareData = (prepareType, firstValue, secondValue) => {
-  firstValue = + firstValue;
-  secondValue = + secondValue;
-
-  if ( prepareType === 'int' && (!Number.isInteger(firstValue) || !Number.isInteger(secondValue) || firstValue < 0 || secondValue <0)) {
-    return NaN;
-  }
-
-  if (prepareType === 'float' && (!(typeof firstValue === 'number') || !(typeof secondValue === 'number') || firstValue < 0 || secondValue < 0)) {
-    return NaN;
-  }
-
-  if (firstValue > secondValue) { [firstValue, secondValue] = [secondValue, firstValue]; }
-  return [firstValue, secondValue];
-};
-
 // случайное целое
 const getRandomInteger = (min, max) => {
-  const checkedData = prepareData('int', min, max);
-  if (Number.isNaN(checkedData)) { return NaN; }
-  [min, max] = checkedData;
-  return Math.floor(min + Math.random() * (max - min + 1));
+  // на вход поlается целое неотрицательное число
+  if (Number.isInteger(min) && Number.isInteger(max) && min >= 0 && max >= 0) {
+    // если диапазон перепутали, я думаю, можно простить и самим переставить числа как надо
+    if (min > max) { [min, max] = [max, min]; }
+    return Math.floor(min + Math.random() * (max - min + 1));
+  }
+  // вот тут, думаю, принципиально - я пытался найти и чекнуть все особые ситуации, а надо было идти по принципу: принимаем правильные данные, а всё остальное - посылаем :)
+  throw new RangeError('Incoming data error. Check incoming data');
 };
 
 // случайное дробное
 const getRandomFloat = (min, max, exp = 0) => {
-  const checkedData = prepareData('float', min, max);
-  exp = +exp;
-  if (Number.isNaN(checkedData) || exp < 0 || !Number.isInteger(exp)) { return NaN; }
-  [min, max] = checkedData;
-  const multiplieRate = Math.pow(10, exp);
-  min = Math.ceil(min *= multiplieRate);
-  max = Math.floor(max *= multiplieRate);
-  min = (min > max) ? min = max: min ;
-  const result = ((min + Math.random() * (max - min)) / multiplieRate).toFixed(exp);
-  return result;
+  // проверяем, что на входе неотрицательные числа и кол-во знаков задано целым положительным числом
+  if ((typeof min === 'number') && (typeof max === 'number') && min >= 0 && max >= 0 && Number.isInteger(exp) && exp >= 0) {
+    // а далее в общем  то же самое - прощаем перепутанный диапазон и получаем рандом из диапазона
+    if (min > max) { [min, max] = [max, min]; }
+    return (min + Math.random() * (max - min)).toFixed(exp);
+  }
+  throw new RangeError('Incoming data error. Check incoming data');
 };
 
-getRandomInteger(4, 0);
-getRandomFloat(10.123156, '10.1286789', 10);
+getRandomInteger(44, 10);
+// console.log(getRandomInteger(20, 10));
+getRandomFloat(10.123156, 10.4286789, 10);
+// console.log(getRandomFloat(10.123156, 10.5286789, 10));
 
 
