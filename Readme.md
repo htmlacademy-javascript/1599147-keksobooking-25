@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Dmitry Pulsha](https://up.htmlacademy.ru/javascript/25/user/1599147).
-* Наставник: [Виктор Кан](https://up.htmlacademy.ru/javascript/25/user/241239).
+* Наставник: [Максим Волков](https://up.htmlacademy.ru/javascript/25/user/1508839).
 
 ---
 
