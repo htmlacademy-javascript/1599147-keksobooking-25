@@ -1,29 +1,47 @@
-// случайное целое
-const getRandomInteger = (min, max) => {
-  // на вход поlается целое неотрицательное число
-  if (Number.isInteger(min) && Number.isInteger(max) && min >= 0 && max >= 0) {
-    // если диапазон перепутали, я думаю, можно простить и самим переставить числа как надо
-    if (min > max) { [min, max] = [max, min]; }
-    return Math.floor(min + Math.random() * (max - min + 1));
+// text
+import {getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray} from './utils.js';
+import {getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos} from './config.js';
+
+const TEST_OBJECT_NUM = 10;
+
+const createOfferItem = (index) => {
+
+  const offerObject = {
+    author: { avatar: '', },
+    offer: {
+      title: getOfferTitle()[getRandomInteger(0, getOfferTitle().length - 1)],
+      address: '',
+      price: getRandomInteger(0, 1000000),
+      type: getOfferPlace()[getRandomInteger(0, getOfferPlace().length - 1)].kind,
+      rooms: getRandomInteger(0, 100),
+      guests: getRandomInteger(0, 3),
+      checkin: getCheckinTime()[getRandomInteger(0, getCheckinTime().length - 1)],
+      checkout: getCheckoutTime()[getRandomInteger(0, getCheckoutTime().length - 1)],
+      features: getUnicRangomArray(getFeatures()),
+      description: getDescriptions()[getRandomInteger(0, getDescriptions().length - 1)],
+      photos: getNonUnicRangomArray(getPhotos(), getRandomInteger(1, 5)) ,
+      location: {
+        lat: getRandomFloat(35.65000, 35.70000, 5),
+        lng: getRandomFloat(139.70000, 139.80000, 5),
+      },
+    }
+  };
+  offerObject.address = `${offerObject.offer.location.lat} ${offerObject.offer.location.lng}`;
+
+  if (index < 8) {
+    offerObject.author.avatar = `img/avatars/user0${index + 1}.png`;
   }
-  // вот тут, думаю, принципиально - я пытался найти и чекнуть все особые ситуации, а надо было идти по принципу: принимаем правильные данные, а всё остальное - посылаем :)
-  throw new RangeError('Incoming data error. Check incoming data');
+
+  return offerObject;
 };
 
-// случайное дробное
-const getRandomFloat = (min, max, exp = 0) => {
-  // проверяем, что на входе неотрицательные числа и кол-во знаков задано целым положительным числом
-  if ((typeof min === 'number') && (typeof max === 'number') && min >= 0 && max >= 0 && Number.isInteger(exp) && exp >= 0) {
-    // а далее в общем  то же самое - прощаем перепутанный диапазон и получаем рандом из диапазона
-    if (min > max) { [min, max] = [max, min]; }
-    return (min + Math.random() * (max - min)).toFixed(exp);
-  }
-  throw new RangeError('Incoming data error. Check incoming data');
+const createOfferList = (itemQuantity) => {
+
+  const offerArray = new Array(itemQuantity).fill(null).map((value, index) => createOfferItem(index));
+  return offerArray;
 };
 
-getRandomInteger(44, 10);
-// console.log(getRandomInteger(20, 10));
-getRandomFloat(10.123156, 10.4286789, 10);
-// console.log(getRandomFloat(10.123156, 10.5286789, 10));
+// console.log(createOfferItem());
+// console.log(createOfferList(TEST_OBJECT_NUM));
 
-
+createOfferList(TEST_OBJECT_NUM);
