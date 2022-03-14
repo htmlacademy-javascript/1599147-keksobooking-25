@@ -13,11 +13,26 @@ const OFFER_TITLE_LIST = [
 ];
 
 const PLACE_LIST = [
-  { kind:'bungalow', },
-  { kind:'flat',  },
-  { kind:'house', },
-  { kind: 'hotel', },
-  { kind:'palace',  },
+  {
+    kind: 'bungalow',
+    nameRu: 'Бунгало',
+  },
+  {
+    kind: 'flat',
+    nameRu:'Квартира',
+  },
+  {
+    kind: 'house',
+    nameRu:'Дом',
+  },
+  {
+    kind: 'hotel',
+    nameRu: 'Отель',
+  },
+  {
+    kind: 'palace',
+    nameRu:'Дворец',
+  },
 ];
 
 const CHECK_IN_TIME = [
@@ -59,7 +74,6 @@ const PHOTO_TEST_LIST = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-
 
 const getOfferTitle = () => OFFER_TITLE_LIST;
 const getOfferPlace = () => PLACE_LIST;

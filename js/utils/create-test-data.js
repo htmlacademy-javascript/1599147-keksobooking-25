@@ -23,8 +23,8 @@ const createOfferItem = (index) => {
       },
     }
   };
-  offerObject.address = `${offerObject.offer.location.lat} ${offerObject.offer.location.lng}`;
-
+  offerObject.offer.address = `${offerObject.offer.location.lat} ${offerObject.offer.location.lng}`;
+  // перевести на замыкание - набор уникальных индексов от 1 до 9
   if (index < 8) {
     offerObject.author.avatar = `img/avatars/user0${index + 1}.png`;
   }
@@ -33,7 +33,6 @@ const createOfferItem = (index) => {
 };
 
 const createOfferList = (itemQuantity) => {
-
   const offerArray = new Array(itemQuantity).fill(null).map((value, index) => createOfferItem(index));
   return offerArray;
 };
@@ -42,7 +41,8 @@ const prepareTestData = () => {
   const TEST_OBJECT_NUM = 10;
   return createOfferList(TEST_OBJECT_NUM);
 };
-export { prepareTestData };
+
+export { createOfferList, prepareTestData };
 
 // console.log(createOfferItem());
 // console.log(createOfferList(TEST_OBJECT_NUM));
