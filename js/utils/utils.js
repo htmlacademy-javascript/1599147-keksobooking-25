@@ -39,5 +39,26 @@ const getNonUnicRangomArray = (srcArray, newLength) => {
   const newArray = new Array(newLength).fill(null).map(() => srcArray[getRandomInteger(0, srcArray.length - 1)]);
   return newArray;
 };
+// уникальное значение из массива
+const getUnicArrayValue = (array) => {
+  const tempArray = array.slice();
+  return () => {
+    let tempIndex = getRandomInteger(0, tempArray.length);
+    let unicValue = tempArray[tempIndex];
+    if (tempArray.every((value) => value === null)) {
+      throw new Error('Array is empty');
+    }
 
-export { getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray };
+    while (!unicValue) {
+      tempIndex = getRandomInteger(0, tempArray.length);
+      // console.log(tempIndex);
+      unicValue = tempArray[tempIndex];
+      // console.log(unicValue);
+    }
+    tempArray[tempIndex] = null;
+    // console.log(tempArray);
+    return unicValue;
+  };
+};
+
+export { getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray, getUnicArrayValue };

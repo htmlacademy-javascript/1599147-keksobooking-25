@@ -1,4 +1,4 @@
-import {getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray} from './utils.js';
+import {getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray, getUnicArrayValue} from './utils.js';
 import { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos } from '../config.js';
 
 const TEST_OBJECT_NUM = 10;
@@ -15,6 +15,7 @@ const TEST_LNG_MIN = 139.70000;
 const TEST_LNG_MAX = 139.80000;
 const TEST_LNG_PRECISION = 5;
 
+
 const getAvatarLink = (index) => {
   let avatarLink = '';
   if (index < 9) {
@@ -23,12 +24,14 @@ const getAvatarLink = (index) => {
   return avatarLink;
 };
 
-// const createAvatarArray = (arrayLength) => {
-//   const avatarSrcArray = new Array(arrayLength).fill(null).map((value, index) => getAvatarLink(index));
-//   return avatarSrcArray;
-// };
+const createAvatarArray = (arrayLength) => {
+  const avatarSrcArray = new Array(arrayLength).fill(null).map((_, index) => getAvatarLink(index));
+  return avatarSrcArray;
+};
 
-const createOfferItem = (index) => {
+const createOfferItem = () => {
+  const getRandomAvatarLink = getUnicArrayValue(createAvatarArray(TEST_OBJECT_NUM));
+
   const offerObject = {
     author: { avatar: '', },
     offer: {
@@ -50,17 +53,21 @@ const createOfferItem = (index) => {
     }
   };
   offerObject.offer.address = `${offerObject.offer.location.lat} ${offerObject.offer.location.lng}`;
-  offerObject.author.avatar = getAvatarLink(index);
+  // offerObject.author.avatar = getAvatarLink(index);
+  offerObject.author.avatar =getRandomAvatarLink();
 
   return offerObject;
 };
 
 const createOfferList = (itemQuantity) => {
-  const offerArray = new Array(itemQuantity).fill(null).map((_, index) => createOfferItem(index));
+  const offerArray = new Array(itemQuantity).fill(null).map(() => createOfferItem());
+  // console.log(offerArray);
   return offerArray;
 };
 
 const prepareTestData = () => createOfferList(TEST_OBJECT_NUM);
+
+// console.log(prepareTestData());
 
 export { createOfferList, prepareTestData };
 
