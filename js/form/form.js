@@ -1,12 +1,32 @@
 // //модуль работы с формой
-// const offerForm = document.querySelector('.ad-form');
-// const filterForm = document.querySelector('.ad-form--disabled');
 
-// const disableOfferForm = () => {
-//   offerForm.classList.add('ad-form--disabled');
-// console.log('disable offerForm');
-// };
+const disableElementList = (elementList) => {
+  elementList.forEach((element) => element.setAttribute('disabled', 'true'));
+};
 
-// disableOfferForm();
+const enableElementList = (elementList) => {
+  elementList.forEach((element) => element.removeAttribute('disabled'));
+};
 
-// export { disableOfferForm };
+const getFormElementList = (form) => {
+  const elementList = form.querySelectorAll('fieldset, select');
+  return elementList;
+};
+
+const disableForm = (form) => {
+  form.classList.add('ad-form--disabled');
+  const formElementList = getFormElementList(form);
+  if (formElementList) {
+    disableElementList(formElementList);
+  }
+};
+
+const enableForm = (form) => {
+  form.classList.remove('ad-form--disabled');
+  const formElementList = getFormElementList(form);
+  if (formElementList) {
+    enableElementList(formElementList);
+  }
+};
+
+export { disableForm, enableForm };
