@@ -40,4 +40,55 @@ const getNonUnicRangomArray = (srcArray, newLength) => {
   return newArray;
 };
 
-export { getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray };
+
+// уникальное значение из массива
+// есть массив. нужно случайным образом вытащить из него элементы, пока массив не "опустеет"
+// реализация через замыкание -  на вход подается массив, на выходе - функция, которая "потрошит" массив и связана со входящим массивом
+// const getUnicArrayValue = (array) => {
+//   // console.log('create arch');
+//   const tempArray = array.slice();
+//   return () => {
+//     let tempIndex = getRandomInteger(0, tempArray.length - 1);
+//     let unicValue = tempArray[tempIndex];
+//     if (tempArray.every((value) => value === null)) {
+//       throw new Error('Array is empty');
+//       // требований заказчика нет поскольку функция "временная" и для внутреннего пользования -  я выбрал этот вариант - он мне удобен
+//       // если нужно скрыть вылеты - можно возвращать пустое значение.
+//     }
+
+//     //  далее "потрошим" массив
+//     // в принципе можно попробовать очистку через splice до нулевой длины
+//     while (!unicValue) {
+//       tempIndex = getRandomInteger(0, tempArray.length -1 );
+//       unicValue = tempArray[tempIndex];
+//     }
+//     tempArray[tempIndex] = null;
+//     // console.log(tempArray);
+//     return unicValue;
+//   };
+// };
+
+
+// та же самая идея с замыканием, но с использованием splice - сразу чистим массив, всегда попадаем на корректное значение, не нужен перебор while
+const getUnicArrayValue = (array) => {
+  const tempArray = array.slice();
+
+  return () => {
+    let unicValue = '';
+    let tempIndex;
+    if (!tempArray.length) {
+      return unicValue;
+    } else {
+      tempIndex = getRandomInteger(0, tempArray.length - 1);
+      unicValue = tempArray[tempIndex];
+      // console.log('tempIndex ', tempIndex);
+      // console.log('unicValue ', unicValue);
+    }
+    tempArray.splice(tempIndex, 1);
+    // console.log('tempArray ', tempArray);
+    // связанный массив успешно потрошится.
+    return unicValue;
+  };
+};
+
+export { getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray, getUnicArrayValue };
