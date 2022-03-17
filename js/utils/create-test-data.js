@@ -28,10 +28,11 @@ const createAvatarArray = (arrayLength) => {
   const avatarSrcArray = new Array(arrayLength).fill(null).map((_, index) => getAvatarLink(index));
   return avatarSrcArray;
 };
+
 const createOfferList = (itemQuantity) => {
+  const getRandomAvatarLink = getUnicArrayValue(createAvatarArray(itemQuantity));
 
   const createOfferItem = () => {
-    const getRandomAvatarLink = getUnicArrayValue(createAvatarArray(TEST_OBJECT_NUM));
 
     const offerObject = {
       author: { avatar: getRandomAvatarLink(), },
