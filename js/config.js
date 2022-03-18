@@ -16,22 +16,32 @@ const PLACE_LIST = [
   {
     kind: 'bungalow',
     nameRu: 'Бунгало',
+    minPrice: 0,
+    maxPrice: 100000,
   },
   {
     kind: 'flat',
     nameRu:'Квартира',
+    minPrice: 1000,
+    maxPrice: 100000,
   },
   {
     kind: 'house',
     nameRu:'Дом',
+    minPrice: 5000,
+    maxPrice: 100000,
   },
   {
     kind: 'hotel',
     nameRu: 'Отель',
+    minPrice: 3000,
+    maxPrice: 100000,
   },
   {
     kind: 'palace',
     nameRu:'Дворец',
+    minPrice: 10000,
+    maxPrice: 100000,
   },
 ];
 
