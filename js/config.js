@@ -45,6 +45,29 @@ const PLACE_LIST = [
   },
 ];
 
+const ROOM_CAPACITY = [
+  { roomValue: '1',
+    MIN: 1,
+    MAX: 1,
+    description: '',
+  },
+  { roomValue: '2',
+    MIN: 1,
+    MAX: 2,
+    description: '',
+  },
+  { roomValue: '3',
+    MIN: 1,
+    MAX: 3,
+    description: '',
+  },
+  { roomValue: '100',
+    MIN: 0,
+    MAX: 0,
+    description: 'не для гостей',
+  },
+];
+
 const CHECK_IN_TIME = [
   '12:00',
   '13:00',
@@ -85,6 +108,16 @@ const PHOTO_TEST_LIST = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
+const getPlaceKeyValue = (placeList, inKey, inKeyValue, outKey) => {
+  const place = placeList.find((value) => value[inKey] === inKeyValue);
+  return place[outKey];
+};
+
+const getObjItemByValue = (objectList, inKey, inKeyValue) => {
+  const place = objectList.find((value) => value[inKey] === inKeyValue);
+  return place;
+};
+
 const getOfferTitle = () => OFFER_TITLE_LIST;
 const getOfferPlace = () => PLACE_LIST;
 const getCheckinTime = () => CHECK_IN_TIME;
@@ -92,5 +125,9 @@ const getCheckoutTime = () => CHECK_OUT_TIME;
 const getFeatures = () => PLACE_FEATURE_LIST;
 const getDescriptions = () => OFFER_DESCRIPTION_LIST;
 const getPhotos = () => PHOTO_TEST_LIST;
+const getPlaceCapacity = () => ROOM_CAPACITY;
 
-export { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos };
+// console.log(getPlaceKeyValue(getOfferPlace(), 'kind', 'hotel', 'nameRu'));
+
+
+export { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos, getPlaceKeyValue, getObjItemByValue, getPlaceCapacity };
