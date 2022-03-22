@@ -15,7 +15,6 @@ const TEST_LNG_MIN = 139.70000;
 const TEST_LNG_MAX = 139.80000;
 const TEST_LNG_PRECISION = 5;
 
-
 const getAvatarLink = (index) => {
   let avatarLink = '';
   if (index < 9) {
