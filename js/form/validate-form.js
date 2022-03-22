@@ -31,7 +31,6 @@ const offerValidation = (form, offerPristineValidation) => {
   const validateOfferTitle = (value) => value.length >= TITLE_MIN && value.length <= TITLE_MAX;
 
   const validateOfferPrice = () => {
-
     // const placeByKind = getObjItemByValue(offerPlaceList, 'kind', checkedElementList.type.value);
     const placeByKind = offerPlaces.get(checkedElementList.type.value);
     return checkedElementList.price.value >= placeByKind.minPrice && checkedElementList.price.value <= placeByKind.maxPrice;
