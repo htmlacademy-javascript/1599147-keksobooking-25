@@ -1,5 +1,5 @@
 // //модуль работы с формой
-import { getOfferPlace, getObjItemByValue, getOfferPlaces } from '../config.js';
+import { getOfferPlaces } from '../config.js';
 import { offerValidation, createOfferPristineObject } from './validate-form.js';
 
 // const placeList = getOfferPlace();
