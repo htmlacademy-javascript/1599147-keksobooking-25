@@ -18,24 +18,20 @@ const enableForm = (form) => {
   [...form.elements].forEach(enableElement);
 };
 
-const createSyncElements= (srcElement, destElement) => {
-  const syncElementFunction = () => {
-    destElement.value = srcElement.value;
-  };
-  return syncElementFunction;
+const createSyncElements = (srcElement, destElement) => () => {
+  destElement.value = srcElement.value;
 };
 
-const createCapacityChange = (pristineObject, room, capacity) => {
-  const setCapacityChangeValidation = () => {
-    pristineObject.validate(room);
-    pristineObject.validate(capacity);
-  };
-  return setCapacityChangeValidation;
+const createCapacityChange = (pristineObject, room, capacity) => () => {
+  pristineObject.validate(room);
+  pristineObject.validate(capacity);
 };
 
+const onCheckTimeChangeListener = (srcElement, destElement) => {
+  srcElement.addEventListener('change', createSyncElements(srcElement, destElement));
+};
 
 const prepareOfferForm = (offerForm) => {
-
   const offerPristineObject = createOfferPristineObject(offerForm);
   const formElementList = getCheckedElementList(offerForm);
 
@@ -48,18 +44,7 @@ const prepareOfferForm = (offerForm) => {
     offerPristineObject.validate(formElementList.price);
   };
 
-  // const onCapacityChange = () => {
-  //   offerPristineObject.validate(formElementList.room);
-  //   offerPristineObject.validate(formElementList.capacity);
-  // };
-
   const onCapacityChange = createCapacityChange(offerPristineObject, formElementList.room, formElementList.capacity);
-  // console.log(onCapacityChange);
-
-
-  const onCheckTimeChangeListener = (srcElement, destElement) => {
-    srcElement.addEventListener('change', createSyncElements(srcElement, destElement));
-  };
 
   const onPlaceChangeListener = () => {
     formElementList.type.addEventListener('change', (evt) => onPlaceChange(evt));
@@ -74,11 +59,10 @@ const prepareOfferForm = (offerForm) => {
   };
 
   onPlaceChangeListener(offerForm);
-  onRoomChangeListener(formElementList, offerPristineObject);
-  onCapacityChangeListener(formElementList, offerPristineObject);
+  onRoomChangeListener(formElementList.room, onCapacityChange);
+  onCapacityChangeListener(formElementList.capacity, onCapacityChange);
   onCheckTimeChangeListener(formElementList.checkIn, formElementList.checkOut);
   onCheckTimeChangeListener(formElementList.checkOut, formElementList.checkIn);
 };
 
 export { disableForm, enableForm, prepareOfferForm, getCheckedElementList };
-// onPlaceChangeListener
