@@ -18,25 +18,26 @@ const enableForm = (form) => {
   [...form.elements].forEach(enableElement);
 };
 
-// const getCheckedElementList = (form) => {
-//   const formElementList = {
-//     title: form.querySelector('#title'),
-//     type: form.querySelector('#type'),
-//     price: form.querySelector('#price'),
-//     room: form.querySelector('#room_number'),
-//     capacity: form.querySelector('#capacity'),
-//     checkIn: form.querySelector('#timein'),
-//     checkOut: form.querySelector('#timeout'),
-//   };
-//   return formElementList;
-// };
+const createSyncElements= (srcElement, destElement) => {
+  const syncElementFunction = () => {
+    destElement.value = srcElement.value;
+  };
+  return syncElementFunction;
+};
+
+const createCapacityChange = (pristineObject, room, capacity) => {
+  const setCapacityChangeValidation = () => {
+    pristineObject.validate(room);
+    pristineObject.validate(capacity);
+  };
+  return setCapacityChangeValidation;
+};
+
 
 const prepareOfferForm = (offerForm) => {
 
   const offerPristineObject = createOfferPristineObject(offerForm);
   const formElementList = getCheckedElementList(offerForm);
-
-  // formElementList.checkOut.value = '13:00';
 
   offerValidation(offerForm, offerPristineObject);
 
@@ -47,15 +48,17 @@ const prepareOfferForm = (offerForm) => {
     offerPristineObject.validate(formElementList.price);
   };
 
-  const onCapacityChange = () => {
-    offerPristineObject.validate(formElementList.room);
-    offerPristineObject.validate(formElementList.capacity);
-  };
+  // const onCapacityChange = () => {
+  //   offerPristineObject.validate(formElementList.room);
+  //   offerPristineObject.validate(formElementList.capacity);
+  // };
 
-  const onCheckListener = (srcElement, destElement) => {
-    srcElement.addEventListener('change', () => {
-      destElement.value = srcElement.value;
-    });
+  const onCapacityChange = createCapacityChange(offerPristineObject, formElementList.room, formElementList.capacity);
+  // console.log(onCapacityChange);
+
+
+  const onCheckTimeChangeListener = (srcElement, destElement) => {
+    srcElement.addEventListener('change', createSyncElements(srcElement, destElement));
   };
 
   const onPlaceChangeListener = () => {
@@ -73,8 +76,8 @@ const prepareOfferForm = (offerForm) => {
   onPlaceChangeListener(offerForm);
   onRoomChangeListener(formElementList, offerPristineObject);
   onCapacityChangeListener(formElementList, offerPristineObject);
-  onCheckListener(formElementList.checkIn, formElementList.checkOut);
-  onCheckListener(formElementList.checkOut, formElementList.checkIn);
+  onCheckTimeChangeListener(formElementList.checkIn, formElementList.checkOut);
+  onCheckTimeChangeListener(formElementList.checkOut, formElementList.checkIn);
 };
 
 export { disableForm, enableForm, prepareOfferForm, getCheckedElementList };
