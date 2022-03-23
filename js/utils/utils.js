@@ -81,12 +81,8 @@ const getUnicArrayValue = (array) => {
     } else {
       tempIndex = getRandomInteger(0, tempArray.length - 1);
       unicValue = tempArray[tempIndex];
-      // console.log('tempIndex ', tempIndex);
-      // console.log('unicValue ', unicValue);
     }
     tempArray.splice(tempIndex, 1);
-    // console.log('tempArray ', tempArray);
-    // связанный массив успешно потрошится.
     return unicValue;
   };
 };
