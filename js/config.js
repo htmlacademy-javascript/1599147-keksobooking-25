@@ -1,5 +1,5 @@
 // константы и служебные массивы
-const OFFER_TITLE_LIST = [
+const OFFER_TITLES = [
   'Для работы и отдыха',
   'Помещение с прекрасным видом',
   'Дешево в двух шпагах от метро',
@@ -12,26 +12,60 @@ const OFFER_TITLE_LIST = [
   'Дешево со всеми удобствами на длительный срок',
 ];
 
-const PLACE_LIST = [
+const places = [
   {
     kind: 'bungalow',
     nameRu: 'Бунгало',
+    minPrice: 0,
+    maxPrice: 100000,
   },
   {
     kind: 'flat',
     nameRu:'Квартира',
+    minPrice: 1000,
+    maxPrice: 100000,
   },
   {
     kind: 'house',
     nameRu:'Дом',
+    minPrice: 5000,
+    maxPrice: 100000,
   },
   {
     kind: 'hotel',
     nameRu: 'Отель',
+    minPrice: 3000,
+    maxPrice: 100000,
   },
   {
     kind: 'palace',
     nameRu:'Дворец',
+    minPrice: 10000,
+    maxPrice: 100000,
+  },
+];
+
+// тоже на множественное число
+const roomsCapacity = [
+  { roomValue: '1',
+    MIN: 1,
+    MAX: 1,
+    description: '',
+  },
+  { roomValue: '2',
+    MIN: 1,
+    MAX: 2,
+    description: '',
+  },
+  { roomValue: '3',
+    MIN: 1,
+    MAX: 3,
+    description: '',
+  },
+  { roomValue: '100',
+    MIN: 0,
+    MAX: 0,
+    description: 'не для гостей',
   },
 ];
 
@@ -47,7 +81,8 @@ const CHECK_OUT_TIME = [
   '14:00',
 ];
 
-const PLACE_FEATURE_LIST = [
+
+const placeFeatures = [
   'wifi',
   'dishwasher',
   'parking',
@@ -56,7 +91,7 @@ const PLACE_FEATURE_LIST = [
   'conditioner',
 ];
 
-const OFFER_DESCRIPTION_LIST = [
+const OFFER_DESCRIPTIONS = [
   'Для ценителей истории. Почувствуй себя героем из прошлого.',
   'У нас тут все ништяк. Ларек за углом. Шава 24 часа. Приезжайте! Интернетов нет!',
   'Уютное гнездышко для молодоженов',
@@ -69,18 +104,37 @@ const OFFER_DESCRIPTION_LIST = [
   'Квартира на первом этаже. Соседи тихие. Для всех, кто терпеть не может шума и суеты.',
 ];
 
-const PHOTO_TEST_LIST = [
+const testPhotos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const getOfferTitle = () => OFFER_TITLE_LIST;
-const getOfferPlace = () => PLACE_LIST;
+const getObjItemByValue = (objectList, inKey, inKeyValue) => {
+  const place = objectList.find((value) => value[inKey] === inKeyValue);
+  return place;
+};
+
+const placesMap = new Map();
+places.forEach((value) => { placesMap.set(value.kind, value); });
+// console.log(placesMap);
+// console.log(placesMap.size);
+
+const roomsCapacityMap = new Map();
+roomsCapacity.forEach((value) => {roomsCapacityMap.set(value.roomValue, value);});
+
+const getOfferTitle = () => OFFER_TITLES; // удаление
+const getOfferPlace = () => places; // удаление
+const getOfferPlaces = () => placesMap;
+const getRoomsCapacity = () => roomsCapacityMap;
 const getCheckinTime = () => CHECK_IN_TIME;
 const getCheckoutTime = () => CHECK_OUT_TIME;
-const getFeatures = () => PLACE_FEATURE_LIST;
-const getDescriptions = () => OFFER_DESCRIPTION_LIST;
-const getPhotos = () => PHOTO_TEST_LIST;
+const getFeatures = () => placeFeatures;
+const getDescriptions = () => OFFER_DESCRIPTIONS; // удаление
+const getPhotos = () => testPhotos; // удаление
+const getPlaceCapacity = () => roomsCapacity; // удаление
 
-export { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos };
+// console.log(getPlaceKeyValue(getOfferPlace(), 'kind', 'hotel', 'nameRu'));
+
+
+export { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos, getObjItemByValue, getPlaceCapacity, getOfferPlaces, getRoomsCapacity };

@@ -1,5 +1,5 @@
 //создание карточки для показа объявлений
-import { getOfferPlace } from '../config.js';
+import { getOfferPlace, getObjItemByValue } from '../config.js';
 import { getPriceSuffix, getRoomText, getGuestText, getGuestLimit } from './map-popup-config.js';
 
 const offerPlaceList = getOfferPlace();
@@ -7,10 +7,10 @@ const roomText = getRoomText();
 const guestText = getGuestText();
 const guestLimit = getGuestLimit();
 
-const getPlaceName = (placeList, placeKind) => {
-  const place = placeList.find((value) => value.kind === placeKind);
-  return place.nameRu;
-};
+// const getPlaceName = (placeList, placeKind) => {
+//   const place = placeList.find((value) => value.kind === placeKind);
+//   return place.nameRu;
+// };
 
 const roomFixTextConfig = {
   0: (roomQuantity) => `${roomQuantity} ${roomText.UNKNOWN_ROOM_TEXT}`,
@@ -78,7 +78,9 @@ const createCardPrice = (element, dataObject) => {
 
 const createCardType = (element, dataObject) => {
   if (dataObject.offer && dataObject.offer.type) {
-    element.textContent = getPlaceName(offerPlaceList, dataObject.offer.type);
+    // element.textContent = getPlaceName(offerPlaceList, dataObject.offer.type);
+    // element.textContent = getPlaceKeyValue (offerPlaceList, 'kind', dataObject.offer.type, 'nameRu');
+    element.textContent = getObjItemByValue(offerPlaceList, 'kind', dataObject.offer.type).nameRu;
   } else {
     element.textContent = 'Тип жилья не указан';
     element.classList.add('visually-hidden');
