@@ -666,6 +666,16 @@ fieldset {
           box-shadow: 0 0 2px 2px #ff6547;
 }
 
+.ad-form__element--error input,
+.ad-form__element--error select,
+.ad-form__element--error textarea {
+  background-color: #f5e069;
+}
+
+.ad-form__element--error-text {
+  /* font-weight: bold; */
+  color: #ff6547;
+}
 
 /* Футер
    ========================================================================== */
