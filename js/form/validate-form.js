@@ -1,18 +1,11 @@
 import { getOfferPlaces, getRoomsCapacity } from '../config.js';
-import { getCheckedElementList } from './form.js';
+// import { getCheckedElementList } from './form.js';
 // валидация формы
-
-const TITLE_MIN = 30;
-const TITLE_MAX = 100;
-const TITLE_OUT_OF_RANGE = `Значение должно быть не менее ${TITLE_MIN} и не более ${TITLE_MAX} знаков`;
-
-// const offerPlaceList = getOfferPlace();
-// const offerCapacityList = getPlaceCapacity();
 
 const roomsCapacity = getRoomsCapacity();
 const offerPlaces = getOfferPlaces();
-// console.log(offerPlaces.get('flat').maxPrice);
 
+// объект Pristine
 const createOfferPristineObject = (offerForm) => new Pristine(offerForm, {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__element--error',
@@ -22,13 +15,20 @@ const createOfferPristineObject = (offerForm) => new Pristine(offerForm, {
   errorTextClass: 'ad-form__element--error-text',
 });
 
-// const offerPristineValidation = createOfferPristineObject(form);
+// поля для возможной проверки
+const getCheckedElementList = (form) => ({
+  title: form.querySelector('#title'),
+  type: form.querySelector('#type'),
+  price: form.querySelector('#price'),
+  room: form.querySelector('#room_number'),
+  capacity: form.querySelector('#capacity'),
+  checkIn: form.querySelector('#timein'),
+  checkOut: form.querySelector('#timeout'),
+});
 
 const offerValidation = (form, offerPristineValidation) => {
 
   const checkedElementList = getCheckedElementList(form);
-
-  const validateOfferTitle = (value) => value.length >= TITLE_MIN && value.length <= TITLE_MAX;
 
   const validateOfferPrice = () => {
     // const placeByKind = getObjItemByValue(offerPlaceList, 'kind', checkedElementList.type.value);
@@ -53,17 +53,17 @@ const offerValidation = (form, offerPristineValidation) => {
     const capacityByRoom = roomsCapacity.get(checkedElementList.room.value);
 
     if (capacityByRoom.MAX === 0 ) {
-      return `Для количества комнат ${capacityByRoom.roomValue} указано неверное количество гостей \n Допустимое значение "${capacityByRoom.description}"  \n Измените количество комнат или количество гостей`;
+      return `Для количества комнат ${capacityByRoom.roomValue} допустимое значение гостей: "${capacityByRoom.description}"  \n Измените количество комнат или количество гостей`;
     } else {
-      return `Для количества комнат ${capacityByRoom.roomValue} указано неверное количество гостей \n Допустимое число гостей от "${capacityByRoom.MIN}" до "${capacityByRoom.MAX}" \n Измените количество комнат или количество гостей`;
+      return `Для ${capacityByRoom.roomValue} комнат(ы) можно указать от "${capacityByRoom.MIN}" до "${capacityByRoom.MAX}" гостей \n Измените количество комнат или количество гостей`;
     }
   };
 
   // валидаторы
-  offerPristineValidation.addValidator(checkedElementList.title, validateOfferTitle, TITLE_OUT_OF_RANGE);
+  // offerPristineValidation.addValidator(checkedElementList.title, validateOfferTitle, TITLE_OUT_OF_RANGE);
   offerPristineValidation.addValidator(checkedElementList.price, validateOfferPrice, getPlaceOutOfRangeText);
   offerPristineValidation.addValidator(checkedElementList.capacity, validateOfferCapacity, getCapacityErrorText);
-  offerPristineValidation.addValidator(checkedElementList.room, validateOfferCapacity, getCapacityErrorText);
+  offerPristineValidation.addValidator(checkedElementList.room, validateOfferCapacity);
 
   // листинер для валидации
   const validateListener = (evt) => {
@@ -75,4 +75,4 @@ const offerValidation = (form, offerPristineValidation) => {
   form.addEventListener('submit', validateListener);
 };
 
-export { offerValidation, createOfferPristineObject};
+export { offerValidation, createOfferPristineObject, getCheckedElementList};
