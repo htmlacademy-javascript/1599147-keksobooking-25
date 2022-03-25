@@ -1,6 +1,8 @@
 import { prepareTestData } from './utils/create-test-data.js';
-import { getTestCardFragment } from './map/map-popup.js'; // всплывающая карточка на карте
 import { disableForm, enableForm, prepareOfferForm } from './form/form.js'; // работа с формой onPlaceChangeListener
+import { getTestCardFragment } from './map/map-popup.js'; // всплывающая карточка на карте
+import { getMapId,  } from './map/map-config.js';
+import { mapInit, mapAddLayer, mapInitMainMarker, mapSetOfferMarker } from './map/map.js'; // работа с картой
 // import { offerValidation } from './form/validate-form.js';
 
 // import './map/map-config.js'; // конфигурация  для карты
@@ -24,16 +26,26 @@ if (filterForm) {
 
 // getTestCardFragment(cardContent, prepareTestData());
 
-mapTarget.appendChild(getTestCardFragment(cardContent, prepareTestData()));
+// mapTarget.appendChild(getTestCardFragment(cardContent, prepareTestData()));
 
-if (offerForm) {
-  enableForm(offerForm);
-}
-if (filterForm) {
-  enableForm(filterForm);
-}
+const initForm = () => {
+  if (offerForm) {
+    enableForm(offerForm);
+  }
+  if (filterForm) {
+    enableForm(filterForm);
+  }
+  prepareOfferForm(offerForm);
+};
 
-prepareOfferForm(offerForm);
+const mapObject = mapInit(getMapId(), initForm);
+
+mapAddLayer(mapObject);
+
+mapInitMainMarker(mapObject, offerForm);
+
+prepareTestData().forEach((offerItem) =>  mapSetOfferMarker(mapObject, offerItem, cardContent));
+
 // onPlaceChangeListener(offerForm);
 
 

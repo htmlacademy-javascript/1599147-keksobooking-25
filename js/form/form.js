@@ -1,6 +1,8 @@
 // //модуль работы с формой
 import { getOfferPlaces } from '../config.js';
-import { offerValidation, createOfferPristineObject, getCheckedElementList } from './validate-form.js';
+import { getOfferFormElements, getAddressPrecision } from './form-config.js';
+import { formatAddressByLocation } from '../utils/utils.js';
+import { offerValidation, createOfferPristineObject } from './validate-form.js';
 
 // const placeList = getOfferPlace();
 const places = getOfferPlaces();
@@ -31,9 +33,13 @@ const onCheckTimeChangeListener = (srcElement, destElement) => {
   srcElement.addEventListener('change', createSyncElements(srcElement, destElement));
 };
 
+const setOfferAddress = (offerForm) => (location) => {
+  getOfferFormElements(offerForm).address.value = formatAddressByLocation(location, getAddressPrecision());
+};
+
 const prepareOfferForm = (offerForm) => {
   const offerPristineObject = createOfferPristineObject(offerForm);
-  const formElementList = getCheckedElementList(offerForm);
+  const formElementList = getOfferFormElements(offerForm);
 
   offerValidation(offerForm, offerPristineObject);
 
@@ -65,4 +71,4 @@ const prepareOfferForm = (offerForm) => {
   onCheckTimeChangeListener(formElementList.checkOut, formElementList.checkIn);
 };
 
-export { disableForm, enableForm, prepareOfferForm, getCheckedElementList };
+export { disableForm, enableForm, prepareOfferForm, setOfferAddress };

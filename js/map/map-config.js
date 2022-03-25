@@ -7,8 +7,6 @@ const MAP_INIT_CENTER = {
 
 const MAP_INIT_SCALE = 13;
 
-const MAP_MAX_OFFER_PIN = 10;
-
 const MAP_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 const MAP_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -24,6 +22,8 @@ const MAP_ICON = {
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 };
+
+const MAP_MAX_OFFER_PIN = 10;
 
 const getMapId = () => MAP_ID;
 const getMapInitCenter = () => MAP_INIT_CENTER;

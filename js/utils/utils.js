@@ -87,4 +87,9 @@ const getUnicArrayValue = (array) => {
   };
 };
 
-export { getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray, getUnicArrayValue };
+const formatAddressByLocation = ({
+  lat,
+  lng
+}, precision) => `${lat.toFixed(precision)}, ${lng.toFixed(precision)}`;
+
+export { getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomArray, getUnicArrayValue, formatAddressByLocation };

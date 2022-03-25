@@ -183,5 +183,5 @@ const getTestCardFragment = (cardTemplate, testOfferList) => {
   return testCardListFragment;
 };
 
-export { getTestCardFragment };
+export { getTestCardFragment, fillCardData };
 
