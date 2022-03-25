@@ -174,14 +174,14 @@ const fillCardData = (cardTemplateNode, dataItem) => {
   return cardItem;
 };
 
-const getTestCardFragment = (cardTemplate, testOfferList) => {
-  const testCardListFragment = document.createDocumentFragment();
-  testOfferList.forEach((offer) => {
-    // console.log(offer);
-    testCardListFragment.appendChild(fillCardData(cardTemplate, offer));
-  });
-  return testCardListFragment;
-};
+// const getTestCardFragment = (cardTemplate, testOfferList) => {
+//   const testCardListFragment = document.createDocumentFragment();
+//   testOfferList.forEach((offer) => {
+//     // console.log(offer);
+//     testCardListFragment.appendChild(fillCardData(cardTemplate, offer));
+//   });
+//   return testCardListFragment;
+// };
 
-export { getTestCardFragment, fillCardData };
+export { fillCardData };
 

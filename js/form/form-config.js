@@ -7,6 +7,7 @@ const getOfferFormElements = (form) => ({
   capacity: form.querySelector('#capacity'),
   checkIn: form.querySelector('#timein'),
   checkOut: form.querySelector('#timeout'),
+  priceSlider: form.querySelector('.ad-form__slider'),
 });
 
 const ADDRESS_PRECISION = 5;

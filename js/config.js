@@ -12,36 +12,39 @@ const OFFER_TITLES = [
   'Дешево со всеми удобствами на длительный срок',
 ];
 
+const GLOBAL_MIN_PRICE = 0;
+const GLOBAL_MAX_PRICE = 100000;
+
 const places = [
   {
     kind: 'bungalow',
     nameRu: 'Бунгало',
     minPrice: 0,
-    maxPrice: 100000,
+    maxPrice: GLOBAL_MAX_PRICE,
   },
   {
     kind: 'flat',
     nameRu:'Квартира',
     minPrice: 1000,
-    maxPrice: 100000,
+    maxPrice: GLOBAL_MAX_PRICE,
   },
   {
     kind: 'house',
     nameRu:'Дом',
     minPrice: 5000,
-    maxPrice: 100000,
+    maxPrice: GLOBAL_MAX_PRICE,
   },
   {
     kind: 'hotel',
     nameRu: 'Отель',
     minPrice: 3000,
-    maxPrice: 100000,
+    maxPrice: GLOBAL_MAX_PRICE,
   },
   {
     kind: 'palace',
     nameRu:'Дворец',
     minPrice: 10000,
-    maxPrice: 100000,
+    maxPrice: GLOBAL_MAX_PRICE,
   },
 ];
 
@@ -133,8 +136,10 @@ const getFeatures = () => placeFeatures;
 const getDescriptions = () => OFFER_DESCRIPTIONS; // удаление
 const getPhotos = () => testPhotos; // удаление
 const getPlaceCapacity = () => roomsCapacity; // удаление
+const getGlobalMinPrice = () => GLOBAL_MIN_PRICE;
+const getGlobalMaxPrice = () => GLOBAL_MAX_PRICE;
 
 // console.log(getPlaceKeyValue(getOfferPlace(), 'kind', 'hotel', 'nameRu'));
 
 
-export { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos, getObjItemByValue, getPlaceCapacity, getOfferPlaces, getRoomsCapacity };
+export { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos, getObjItemByValue, getPlaceCapacity, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice };

@@ -15,6 +15,9 @@ const disableForm = (form) => {
   [...form.elements].forEach(disableElement);
 };
 
+const disableSlider = (form) =>  disableElement(getOfferFormElements(form).priceSlider);
+const enableSlider = (form) =>  enableElement(getOfferFormElements(form).priceSlider);
+
 const enableForm = (form) => {
   form.classList.remove('ad-form--disabled');
   [...form.elements].forEach(enableElement);
@@ -71,4 +74,4 @@ const prepareOfferForm = (offerForm) => {
   onCheckTimeChangeListener(formElementList.checkOut, formElementList.checkIn);
 };
 
-export { disableForm, enableForm, prepareOfferForm, setOfferAddress };
+export { disableForm, enableForm, prepareOfferForm, setOfferAddress, disableSlider, enableSlider };
