@@ -2,8 +2,8 @@ import {getRandomFloat, getRandomInteger, getUnicRangomArray, getNonUnicRangomAr
 import { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos } from '../config.js';
 
 const TEST_OBJECT_NUM = 10;
-const TEST_PRICE_MIN = 1000000;
-const TEST_PRICE_MAX = 1000000;
+const TEST_PRICE_MIN = 0;
+const TEST_PRICE_MAX = 100000;
 const TEST_ROOM_MIN = 0;
 const TEST_ROOM_MAX = 100;
 const TEST_GUEST_MIN = 0;

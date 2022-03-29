@@ -1,4 +1,5 @@
 import { getOfferPlaces, getRoomsCapacity } from '../config.js';
+import { getOfferFormElements } from './form-config.js';
 // import { getCheckedElementList } from './form.js';
 // валидация формы
 
@@ -16,19 +17,19 @@ const createOfferPristineObject = (offerForm) => new Pristine(offerForm, {
 });
 
 // поля для возможной проверки
-const getCheckedElementList = (form) => ({
-  title: form.querySelector('#title'),
-  type: form.querySelector('#type'),
-  price: form.querySelector('#price'),
-  room: form.querySelector('#room_number'),
-  capacity: form.querySelector('#capacity'),
-  checkIn: form.querySelector('#timein'),
-  checkOut: form.querySelector('#timeout'),
-});
+// const getCheckedElementList = (form) => ({
+//   title: form.querySelector('#title'),
+//   type: form.querySelector('#type'),
+//   price: form.querySelector('#price'),
+//   room: form.querySelector('#room_number'),
+//   capacity: form.querySelector('#capacity'),
+//   checkIn: form.querySelector('#timein'),
+//   checkOut: form.querySelector('#timeout'),
+// });
 
 const offerValidation = (form, offerPristineValidation) => {
 
-  const checkedElementList = getCheckedElementList(form);
+  const checkedElementList = getOfferFormElements(form);
 
   const validateOfferPrice = () => {
     // const placeByKind = getObjItemByValue(offerPlaceList, 'kind', checkedElementList.type.value);
@@ -75,4 +76,4 @@ const offerValidation = (form, offerPristineValidation) => {
   form.addEventListener('submit', validateListener);
 };
 
-export { offerValidation, createOfferPristineObject, getCheckedElementList};
+export { offerValidation, createOfferPristineObject};
