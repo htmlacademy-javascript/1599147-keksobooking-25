@@ -1,10 +1,13 @@
 // //модуль работы с формой
 import { getOfferPlaces } from '../config.js';
-import { getOfferFormElements, getAddressPrecision } from './form-config.js';
+import { getOfferFormElements, getAddressPrecision,  } from './form-config.js';
 import { formatAddressByLocation } from '../utils/utils.js';
+// import { getMapInitCenter } from '../map/map-config.js';
+import { resetMainMarker } from '../map/map.js';
 import { offerValidation, createOfferPristineObject } from './validate-form.js';
+import { postData } from '../server.js';
+import { createSliderObject, setSliderListeners } from '../slider/slider.js';
 
-// const placeList = getOfferPlace();
 const places = getOfferPlaces();
 
 const disableElement = (element) => element.setAttribute('disabled', '');
@@ -37,17 +40,22 @@ const onCheckTimeChangeListener = (srcElement, destElement) => {
 };
 
 const setOfferAddress = (offerForm) => (location) => {
+  // console.log(offerForm);
+  // console.log(location);
   getOfferFormElements(offerForm).address.value = formatAddressByLocation(location, getAddressPrecision());
+  // console.log(getOfferFormElements(offerForm).address.value);
 };
 
-const prepareOfferForm = (offerForm) => {
-  const offerPristineObject = createOfferPristineObject(offerForm);
-  const formElementList = getOfferFormElements(offerForm);
+// const createResetForm = (offerForm) => () => {
+// // console.log('reset function');
+//   offerForm.reset();
+// };
+
+const setOffervalidation = (offerForm, offerPristineObject, formElementList) => {
 
   offerValidation(offerForm, offerPristineObject);
 
   const onPlaceChange = (evt) => {
-    // formElementList.price.placeholder = getObjItemByValue(placeList, 'kind', evt.target.value).minPrice;
     formElementList.price.placeholder = places.get(evt.target.value).minPrice;
     formElementList.price.setAttribute('min', places.get(evt.target.value).minPrice);
     offerPristineObject.validate(formElementList.price);
@@ -72,6 +80,45 @@ const prepareOfferForm = (offerForm) => {
   onCapacityChangeListener(formElementList.capacity, onCapacityChange);
   onCheckTimeChangeListener(formElementList.checkIn, formElementList.checkOut);
   onCheckTimeChangeListener(formElementList.checkOut, formElementList.checkIn);
+};
+
+const prepareOfferForm = (offerForm, successPopup, errorPopup) => {
+  const offerPristineObject = createOfferPristineObject(offerForm);
+  const formElementList = getOfferFormElements(offerForm);
+
+  createSliderObject(formElementList.priceSlider, formElementList.price);
+  setSliderListeners(formElementList.priceSlider, formElementList.price);
+
+  setOffervalidation(offerForm, offerPristineObject, formElementList);
+
+  const resetForm = () => {
+    // console.log('reset function');
+    offerForm.reset();
+    formElementList.priceSlider.noUiSlider.reset();
+    resetMainMarker(offerForm);
+  };
+
+  const onSuccessSendForm = () => {
+    successPopup();
+    resetForm();
+  };
+
+  const onResetForm = () => {
+    // evt.preventDefault();
+    resetForm();
+  };
+
+  const onSubmitForm = (evt) => {
+    evt.preventDefault();
+    const isFormValid = offerPristineObject.validate();
+    if (isFormValid) {
+      const formData = new FormData(evt.target);
+      postData(onSuccessSendForm, errorPopup, formData);
+    }
+  };
+
+  offerForm.addEventListener('submit', onSubmitForm);
+  offerForm.addEventListener('reset', onResetForm);
 };
 
 export { disableForm, enableForm, prepareOfferForm, setOfferAddress, disableSlider, enableSlider };

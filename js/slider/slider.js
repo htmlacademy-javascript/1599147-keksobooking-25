@@ -5,7 +5,7 @@ const createSliderObject = (sliderElement) => {
       min: getGlobalMinPrice(),
       max: getGlobalMaxPrice(),
     },
-    start: 0,
+    start: getGlobalMinPrice(),
     step: 1,
     connect: 'lower',
     format: {
@@ -34,4 +34,8 @@ const setSliderListeners = (sliderElement, inputElement) => {
   } );
 };
 
-export { createSliderObject, setSliderListeners };
+const createResetSlider = (sliderElement) => () => {
+  sliderElement.noUiSlider.reset();
+};
+
+export { createSliderObject, setSliderListeners, createResetSlider};
