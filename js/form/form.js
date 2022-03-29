@@ -22,6 +22,7 @@ const disableSlider = (form) =>  disableElement(getOfferFormElements(form).price
 const enableSlider = (form) =>  enableElement(getOfferFormElements(form).priceSlider);
 
 const enableForm = (form) => {
+  // console.log(form);
   form.classList.remove('ad-form--disabled');
   [...form.elements].forEach(enableElement);
 };

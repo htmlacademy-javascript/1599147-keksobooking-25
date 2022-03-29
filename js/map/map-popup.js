@@ -1,8 +1,8 @@
-//создание карточки для показа объявлений
-import { getOfferPlace, getObjItemByValue } from '../config.js';
+//создание карточки для показа объявлений getObjItemByValue getOfferPlace
+import { getOfferPlaces} from '../config.js';
 import { getPriceSuffix, getRoomText, getGuestText, getGuestLimit } from './map-popup-config.js';
 
-const offerPlaceList = getOfferPlace();
+const offerPlaceList = getOfferPlaces();
 const roomText = getRoomText();
 const guestText = getGuestText();
 const guestLimit = getGuestLimit();
@@ -80,7 +80,8 @@ const createCardType = (element, dataObject) => {
   if (dataObject.offer && dataObject.offer.type) {
     // element.textContent = getPlaceName(offerPlaceList, dataObject.offer.type);
     // element.textContent = getPlaceKeyValue (offerPlaceList, 'kind', dataObject.offer.type, 'nameRu');
-    element.textContent = getObjItemByValue(offerPlaceList, 'kind', dataObject.offer.type).nameRu;
+    // element.textContent = getObjItemByValue(offerPlaceList, 'kind', dataObject.offer.type).nameRu;
+    element.textContent = offerPlaceList.get(dataObject.offer.type).nameRu;
   } else {
     element.textContent = 'Тип жилья не указан';
     element.classList.add('visually-hidden');
