@@ -31,11 +31,7 @@ const initForm = () => {
     enableForm(offerForm);
     enableSlider(offerForm);
   }
-  // if (filterForm) {
-  //   enableForm(filterForm);
-  // }
 };
-
 
 const mapObject = mapInit(getMapId(), initForm);
 mapAddLayer(mapObject);
@@ -43,16 +39,15 @@ mapInitMainMarker(mapObject, offerForm);
 
 const initOfferMarkers = mapInitOfferMarkers(mapObject, cardContent);
 
-const onSuccessLoadData = (offers) => {
+const successLoadDataHandler = (offers) => {
   initOfferMarkers(offers);
-  // console.log('start enable');
   enableForm(filterForm);
 };
 
-const openErrorLoadPopup = createLoadErrorPopup(mapContainer, reloadMapCallback);
+const errorLoadHandler= createLoadErrorPopup(mapContainer, reloadMapCallback);
 
-function reloadMapCallback() {loadData( onSuccessLoadData, openErrorLoadPopup); }
+function reloadMapCallback() {loadData( successLoadDataHandler, errorLoadHandler); }
 
-loadData(initOfferMarkers, openErrorLoadPopup);
+loadData(successLoadDataHandler, errorLoadHandler);
 
 prepareOfferForm(offerForm, openSuccessFormPopup, openErrorFormPopup);

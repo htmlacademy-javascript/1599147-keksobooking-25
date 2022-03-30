@@ -3,13 +3,14 @@ import { setOfferAddress } from '../form/form.js';
 import { fillCardData } from './map-popup.js';
 import { getNonUnicRangomArray } from '../utils/utils.js';
 
+const mapCenterPoint = getMapInitCenter();
 const mainMarkerIcon = L.icon(getMapMainIcon());
 const markerIcon = L.icon(getMapIcon());
 const MAX_VISIBLE_MARKER = getMapMaxPin();
 
 const mapInit = (mapId, onLoadCallback) => L.map(mapId, { tap: false })
   .on('load', onLoadCallback)
-  .setView(getMapInitCenter(), getMapInitScale());
+  .setView(mapCenterPoint, getMapInitScale());
 
 const mapAddLayer = (map) => {
   L.tileLayer(getMapLayer(),
@@ -26,24 +27,22 @@ const createMarker = (location, icon, draggable=false) => L.marker(location,
   },
 );
 
-const mainMarker = createMarker(getMapInitCenter(), mainMarkerIcon, true);
+const mainMarker = createMarker(mapCenterPoint, mainMarkerIcon, true);
 
 // инициализация маркера на карте
 const mapInitMainMarker = (map, form) => {
   mainMarker.addTo(map);
   const setAddress = setOfferAddress(form);
-  setAddress(getMapInitCenter());
+  setAddress(mapCenterPoint);
   mainMarker.on('moveend', (evt) => { setAddress(evt.target.getLatLng()); });
 };
 
 const resetMarker = (marker, location) => { marker.setLatLng(location); };
 
 const resetMainMarker = (form) => {
-  resetMarker(mainMarker, getMapInitCenter());
-  // console.log('reset marker');
-  // const setAddress = ;
-  setOfferAddress(form)(getMapInitCenter());
-  // console.log('reset Address');
+  // const markerPoint = getMapInitCenter();
+  resetMarker(mainMarker, mapCenterPoint);
+  setOfferAddress(form)(mapCenterPoint);
 };
 
 const mapSetOfferMarker = (map, template) => (offerItem) => {

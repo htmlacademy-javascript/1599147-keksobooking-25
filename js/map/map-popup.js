@@ -1,4 +1,3 @@
-//создание карточки для показа объявлений getObjItemByValue getOfferPlace
 import { getOfferPlaces} from '../config.js';
 import { getPriceSuffix, getRoomText, getGuestText, getGuestLimit } from './map-popup-config.js';
 
@@ -6,11 +5,6 @@ const offerPlaceList = getOfferPlaces();
 const roomText = getRoomText();
 const guestText = getGuestText();
 const guestLimit = getGuestLimit();
-
-// const getPlaceName = (placeList, placeKind) => {
-//   const place = placeList.find((value) => value.kind === placeKind);
-//   return place.nameRu;
-// };
 
 const roomFixTextConfig = {
   0: (roomQuantity) => `${roomQuantity} ${roomText.UNKNOWN_ROOM_TEXT}`,
@@ -78,9 +72,6 @@ const createCardPrice = (element, dataObject) => {
 
 const createCardType = (element, dataObject) => {
   if (dataObject.offer && dataObject.offer.type) {
-    // element.textContent = getPlaceName(offerPlaceList, dataObject.offer.type);
-    // element.textContent = getPlaceKeyValue (offerPlaceList, 'kind', dataObject.offer.type, 'nameRu');
-    // element.textContent = getObjItemByValue(offerPlaceList, 'kind', dataObject.offer.type).nameRu;
     element.textContent = offerPlaceList.get(dataObject.offer.type).nameRu;
   } else {
     element.textContent = 'Тип жилья не указан';
@@ -174,15 +165,6 @@ const fillCardData = (cardTemplateNode, dataItem) => {
   cardCreateSettings.forEach(([element, callback]) => callback(cardItem.querySelector(element), dataItem));
   return cardItem;
 };
-
-// const getTestCardFragment = (cardTemplate, testOfferList) => {
-//   const testCardListFragment = document.createDocumentFragment();
-//   testOfferList.forEach((offer) => {
-//     // console.log(offer);
-//     testCardListFragment.appendChild(fillCardData(cardTemplate, offer));
-//   });
-//   return testCardListFragment;
-// };
 
 export { fillCardData };
 

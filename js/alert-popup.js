@@ -51,9 +51,6 @@ const createErrorFormPopup = (destination, template) => {
   };
 };
 
-// const
-
-
 const createLoadErrorElement = (reloadCallback) => {
 
   const alertPopup = document.createElement('div');
