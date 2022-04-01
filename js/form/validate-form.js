@@ -16,17 +16,6 @@ const createOfferPristineObject = (offerForm) => new Pristine(offerForm, {
   errorTextClass: 'ad-form__element--error-text',
 });
 
-// поля для возможной проверки
-// const getCheckedElementList = (form) => ({
-//   title: form.querySelector('#title'),
-//   type: form.querySelector('#type'),
-//   price: form.querySelector('#price'),
-//   room: form.querySelector('#room_number'),
-//   capacity: form.querySelector('#capacity'),
-//   checkIn: form.querySelector('#timein'),
-//   checkOut: form.querySelector('#timeout'),
-// });
-
 const offerValidation = (form, offerPristineValidation) => {
 
   const checkedElementList = getOfferFormElements(form);
@@ -66,14 +55,6 @@ const offerValidation = (form, offerPristineValidation) => {
   offerPristineValidation.addValidator(checkedElementList.capacity, validateOfferCapacity, getCapacityErrorText);
   offerPristineValidation.addValidator(checkedElementList.room, validateOfferCapacity);
 
-  // листинер для валидации
-  const validateListener = (evt) => {
-    if (!offerPristineValidation.validate()) {
-      evt.preventDefault();
-    }
-  };
-
-  form.addEventListener('submit', validateListener);
 };
 
 export { offerValidation, createOfferPristineObject};

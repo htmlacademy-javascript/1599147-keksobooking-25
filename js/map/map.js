@@ -1,16 +1,18 @@
-import { getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon } from './map-config.js';
+import { getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon, getMapMaxPin } from './map-config.js';
 import { setOfferAddress } from '../form/form.js';
 import { fillCardData } from './map-popup.js';
+import { getNonUnicRangomArray } from '../utils/utils.js';
 
+const mapCenterPoint = getMapInitCenter();
 const mainMarkerIcon = L.icon(getMapMainIcon());
 const markerIcon = L.icon(getMapIcon());
+const MAX_VISIBLE_MARKER = getMapMaxPin();
 
 const mapInit = (mapId, onLoadCallback) => L.map(mapId, { tap: false })
   .on('load', onLoadCallback)
-  .setView(getMapInitCenter(), getMapInitScale());
+  .setView(mapCenterPoint, getMapInitScale());
 
 const mapAddLayer = (map) => {
-  // console.log('add layer');
   L.tileLayer(getMapLayer(),
     {
       attribution: getMapAttribution(),
@@ -25,22 +27,26 @@ const createMarker = (location, icon, draggable=false) => L.marker(location,
   },
 );
 
-const mainMarker = createMarker(getMapInitCenter(), mainMarkerIcon, true);
-
-// const resetMarker = (marker, location) => { marker.setLatLang(location); };
+const mainMarker = createMarker(mapCenterPoint, mainMarkerIcon, true);
 
 // инициализация маркера на карте
 const mapInitMainMarker = (map, form) => {
   mainMarker.addTo(map);
   const setAddress = setOfferAddress(form);
-  setAddress(getMapInitCenter());
-  mainMarker.on('moveend', (evt) => {setAddress(evt.target.getLatLng());});
+  setAddress(mapCenterPoint);
+  mainMarker.on('moveend', (evt) => { setAddress(evt.target.getLatLng()); });
 };
 
-const mapSetOfferMarker = (map, offerItem, template) => {
-  // console.log(getMapInitCenter());
-  // console.log(offerItem.offer.location);
-  const { lat, lng, } = offerItem.offer.location;
+const resetMarker = (marker, location) => { marker.setLatLng(location); };
+
+const resetMainMarker = (form) => {
+  // const markerPoint = getMapInitCenter();
+  resetMarker(mainMarker, mapCenterPoint);
+  setOfferAddress(form)(mapCenterPoint);
+};
+
+const mapSetOfferMarker = (map, template) => (offerItem) => {
+  const { lat, lng, } = offerItem.location;
   const offerMarker = createMarker({
     lat,
     lng,
@@ -48,4 +54,9 @@ const mapSetOfferMarker = (map, offerItem, template) => {
   offerMarker.addTo(map).bindPopup(fillCardData(template, offerItem));
 };
 
-export { mapInit, mapAddLayer, mapInitMainMarker, mapSetOfferMarker };
+const mapInitOfferMarkers = (map, template) => {
+  const initMarkerItem = mapSetOfferMarker(map, template);
+  return  (offers) => getNonUnicRangomArray(offers, MAX_VISIBLE_MARKER).forEach((element) => { initMarkerItem(element);});
+};
+
+export { mapInit, mapAddLayer, mapInitMainMarker, mapInitOfferMarkers, resetMainMarker };

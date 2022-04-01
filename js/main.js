@@ -1,24 +1,22 @@
-import { prepareTestData } from './utils/create-test-data.js';
-import { disableForm, enableForm, prepareOfferForm, disableSlider, enableSlider } from './form/form.js'; // работа с формой onPlaceChangeListener
-// import { getTestCardFragment } from './map/map-popup.js'; // всплывающая карточка на карте
-import { getMapId } from './map/map-config.js';
-import { mapInit, mapAddLayer, mapInitMainMarker, mapSetOfferMarker } from './map/map.js'; // работа с картой
-import { createSliderObject, setSliderListeners } from './slider/slider.js';
-// import { offerValidation } from './form/validate-form.js';
 
-// import './map/map-config.js'; // конфигурация  для карты
-// import './map/map.js'; //загрузка и инициализация карты
-// import './map/map-filter.js'; // работа с фильтром карты
-// import './form/check-form.js'; // проверка полей формы
-// import './alert-popup.js'; // попапы для ошибок
-// import './server.js'; // взаимодействие с сервером
+import { disableForm, enableForm, prepareOfferForm, disableSlider, enableSlider } from './form/form.js';
+import { getMapId } from './map/map-config.js';
+import { mapInit, mapAddLayer, mapInitMainMarker, mapInitOfferMarkers } from './map/map.js';
+import { loadData } from './server.js';
+import { createSuccessFormPopup, createErrorFormPopup, createLoadErrorPopup } from './alert-popup.js';
 
 const offerForm = document.querySelector('.ad-form');
 const filterForm = document.querySelector('.map__filters');
 const cardContent = document.querySelector('#card').content.querySelector('.popup');
-const sliderElement = document.querySelector('.ad-form__slider');
-const inputElement = offerForm.querySelector('#price');
-// const mapTarget = document.querySelector('#map-canvas');
+// const sliderElement = document.querySelector('.ad-form__slider');
+// const inputElement = offerForm.querySelector('#price');
+const templateSuccessFormPopup = document.querySelector('#success').content.querySelector('.success');
+const templateErrorFormPopup = document.querySelector('#error').content.querySelector('.error');
+const popupFormDestination = document.body;
+const mapContainer = document.querySelector('.map');
+
+const openSuccessFormPopup = createSuccessFormPopup(popupFormDestination, templateSuccessFormPopup);
+const openErrorFormPopup = createErrorFormPopup(popupFormDestination, templateErrorFormPopup);
 
 if (offerForm) {
   disableForm(offerForm);
@@ -28,28 +26,28 @@ if (filterForm) {
   disableForm(filterForm);
 }
 
-// getTestCardFragment(cardContent, prepareTestData());
-
-// mapTarget.appendChild(getTestCardFragment(cardContent, prepareTestData()));
-
 const initForm = () => {
   if (offerForm) {
     enableForm(offerForm);
     enableSlider(offerForm);
   }
-  if (filterForm) {
-    enableForm(filterForm);
-  }
-  prepareOfferForm(offerForm);
 };
 
 const mapObject = mapInit(getMapId(), initForm);
-
 mapAddLayer(mapObject);
-
 mapInitMainMarker(mapObject, offerForm);
 
-prepareTestData().forEach((offerItem) =>  mapSetOfferMarker(mapObject, offerItem, cardContent));
+const initOfferMarkers = mapInitOfferMarkers(mapObject, cardContent);
 
-createSliderObject(sliderElement, inputElement);
-setSliderListeners(sliderElement, inputElement);
+const successLoadDataHandler = (offers) => {
+  initOfferMarkers(offers);
+  enableForm(filterForm);
+};
+
+const errorLoadHandler= createLoadErrorPopup(mapContainer, reloadMapCallback);
+
+function reloadMapCallback() {loadData( successLoadDataHandler, errorLoadHandler); }
+
+loadData(successLoadDataHandler, errorLoadHandler);
+
+prepareOfferForm(offerForm, openSuccessFormPopup, openErrorFormPopup);

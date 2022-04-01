@@ -1,10 +1,12 @@
-// //модуль работы с формой
+// модуль работы с формой
 import { getOfferPlaces } from '../config.js';
-import { getOfferFormElements, getAddressPrecision } from './form-config.js';
+import { getOfferFormElements, getAddressPrecision,  } from './form-config.js';
 import { formatAddressByLocation } from '../utils/utils.js';
+import { resetMainMarker } from '../map/map.js';
 import { offerValidation, createOfferPristineObject } from './validate-form.js';
+import { postData } from '../server.js';
+import { createSliderObject, setSliderListeners } from '../slider/slider.js';
 
-// const placeList = getOfferPlace();
 const places = getOfferPlaces();
 
 const disableElement = (element) => element.setAttribute('disabled', '');
@@ -40,38 +42,73 @@ const setOfferAddress = (offerForm) => (location) => {
   getOfferFormElements(offerForm).address.value = formatAddressByLocation(location, getAddressPrecision());
 };
 
-const prepareOfferForm = (offerForm) => {
-  const offerPristineObject = createOfferPristineObject(offerForm);
-  const formElementList = getOfferFormElements(offerForm);
+const setOfferValidation = (offerForm, offerPristineObject, formElementList) => {
 
   offerValidation(offerForm, offerPristineObject);
 
-  const onPlaceChange = (evt) => {
-    // formElementList.price.placeholder = getObjItemByValue(placeList, 'kind', evt.target.value).minPrice;
+  const placeChangeHandler = (evt) => {
     formElementList.price.placeholder = places.get(evt.target.value).minPrice;
     formElementList.price.setAttribute('min', places.get(evt.target.value).minPrice);
     offerPristineObject.validate(formElementList.price);
   };
 
-  const onCapacityChange = createCapacityChange(offerPristineObject, formElementList.room, formElementList.capacity);
+  const capacityChangeHandler = createCapacityChange(offerPristineObject, formElementList.room, formElementList.capacity);
 
   const onPlaceChangeListener = () => {
-    formElementList.type.addEventListener('change', (evt) => onPlaceChange(evt));
+    formElementList.type.addEventListener('change', (evt) => placeChangeHandler(evt));
   };
 
   const onRoomChangeListener = () => {
-    formElementList.room.addEventListener('change', onCapacityChange);
+    formElementList.room.addEventListener('change', capacityChangeHandler);
   };
 
   const onCapacityChangeListener = () => {
-    formElementList.capacity.addEventListener('change', onCapacityChange);
+    formElementList.capacity.addEventListener('change', capacityChangeHandler);
   };
 
   onPlaceChangeListener(offerForm);
-  onRoomChangeListener(formElementList.room, onCapacityChange);
-  onCapacityChangeListener(formElementList.capacity, onCapacityChange);
+  onRoomChangeListener(formElementList.room, capacityChangeHandler);
+  onCapacityChangeListener(formElementList.capacity, capacityChangeHandler);
   onCheckTimeChangeListener(formElementList.checkIn, formElementList.checkOut);
   onCheckTimeChangeListener(formElementList.checkOut, formElementList.checkIn);
+};
+
+const prepareOfferForm = (offerForm, successPopup, errorPopup) => {
+  const offerPristineObject = createOfferPristineObject(offerForm);
+  const formElementList = getOfferFormElements(offerForm);
+
+  createSliderObject(formElementList.priceSlider, formElementList.price);
+  setSliderListeners(formElementList.priceSlider, formElementList.price);
+
+  setOfferValidation(offerForm, offerPristineObject, formElementList);
+
+  const resetForm = () => {
+    formElementList.priceSlider.noUiSlider.reset();
+    resetMainMarker(offerForm);
+  };
+
+  const delayedResetForm = () => setTimeout(resetForm, 0);
+
+  const successSendFormHandler = () => {
+    successPopup();
+    delayedResetForm();
+  };
+
+  const resetFormHandler = () => {
+    delayedResetForm();
+  };
+
+  const submitFormHandler = (evt) => {
+    evt.preventDefault();
+    const isFormValid = offerPristineObject.validate();
+    if (isFormValid) {
+      const formData = new FormData(evt.target);
+      postData(successSendFormHandler, errorPopup, formData);
+    }
+  };
+
+  offerForm.addEventListener('submit', submitFormHandler);
+  offerForm.addEventListener('reset', resetFormHandler);
 };
 
 export { disableForm, enableForm, prepareOfferForm, setOfferAddress, disableSlider, enableSlider };

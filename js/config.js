@@ -1,16 +1,7 @@
 // константы и служебные массивы
-const OFFER_TITLES = [
-  'Для работы и отдыха',
-  'Помещение с прекрасным видом',
-  'Дешево в двух шпагах от метро',
-  'Идеально для молодых',
-  'Тем, кто путешествует с детьми',
-  'Дешево и уютно',
-  'Апартаменты с максимумом удобств',
-  'Предложение для студентов',
-  'Прекрасные апартаменты недорого и в тихом районе',
-  'Дешево со всеми удобствами на длительный срок',
-];
+const API_URL = 'https://23.javascript.pages.academy/keksobooking';
+
+const MAX_MAP_OFFER = 10;
 
 const GLOBAL_MIN_PRICE = 0;
 const GLOBAL_MAX_PRICE = 100000;
@@ -48,7 +39,6 @@ const places = [
   },
 ];
 
-// тоже на множественное число
 const roomsCapacity = [
   { roomValue: '1',
     MIN: 1,
@@ -84,7 +74,6 @@ const CHECK_OUT_TIME = [
   '14:00',
 ];
 
-
 const placeFeatures = [
   'wifi',
   'dishwasher',
@@ -94,52 +83,20 @@ const placeFeatures = [
   'conditioner',
 ];
 
-const OFFER_DESCRIPTIONS = [
-  'Для ценителей истории. Почувствуй себя героем из прошлого.',
-  'У нас тут все ништяк. Ларек за углом. Шава 24 часа. Приезжайте! Интернетов нет!',
-  'Уютное гнездышко для молодоженов',
-  'Комната в трёхкомнатной квартире, подойдёт молодым путешественникам.',
-  'Один из лучших хостелов для душевного общения. Ужинаем вместе и играем в «Мафию» по вечерам, вкусно готовим. Ежедневная уборка, бесплатный Wi-Fi, чистое постельное белье',
-  'Тут красиво, светло и уютно. Есть где разместиться компании из 5 человек. Кофе и печеньки бесплатно.',
-  'Великолепная лавочка прямо в центре парка. Подходит для всех кто любит спать на свежем воздухе. Возможность поставить палатку',
-  'Маленькая чистая квартира на краю парка. Без интернета, регистрации и СМС."',
-  'Замечательный дворец в старинном центре города. Только для тех кто может себе позволить дворец. Лакеев и прочих жокеев просим не беспокоить.',
-  'Квартира на первом этаже. Соседи тихие. Для всех, кто терпеть не может шума и суеты.',
-];
-
-const testPhotos = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
-];
-
-const getObjItemByValue = (objectList, inKey, inKeyValue) => {
-  const place = objectList.find((value) => value[inKey] === inKeyValue);
-  return place;
-};
-
 const placesMap = new Map();
 places.forEach((value) => { placesMap.set(value.kind, value); });
-// console.log(placesMap);
-// console.log(placesMap.size);
 
 const roomsCapacityMap = new Map();
 roomsCapacity.forEach((value) => {roomsCapacityMap.set(value.roomValue, value);});
 
-const getOfferTitle = () => OFFER_TITLES; // удаление
-const getOfferPlace = () => places; // удаление
 const getOfferPlaces = () => placesMap;
 const getRoomsCapacity = () => roomsCapacityMap;
 const getCheckinTime = () => CHECK_IN_TIME;
 const getCheckoutTime = () => CHECK_OUT_TIME;
 const getFeatures = () => placeFeatures;
-const getDescriptions = () => OFFER_DESCRIPTIONS; // удаление
-const getPhotos = () => testPhotos; // удаление
-const getPlaceCapacity = () => roomsCapacity; // удаление
 const getGlobalMinPrice = () => GLOBAL_MIN_PRICE;
 const getGlobalMaxPrice = () => GLOBAL_MAX_PRICE;
+const getServerURL = () => API_URL;
+const getMaxMapOffer = () => MAX_MAP_OFFER;
 
-// console.log(getPlaceKeyValue(getOfferPlace(), 'kind', 'hotel', 'nameRu'));
-
-
-export { getOfferTitle, getOfferPlace, getCheckinTime, getCheckoutTime, getFeatures, getDescriptions, getPhotos, getObjItemByValue, getPlaceCapacity, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice };
+export { getCheckinTime, getCheckoutTime, getFeatures, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer };

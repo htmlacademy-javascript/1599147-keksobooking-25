@@ -89,6 +89,19 @@ fieldset {
   background-color: #dddddd;
 }
 
+.map__error-alert {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  width: 100%;
+  padding: 5px 20px;
+  background-color: red;
+}
+
+.map__error--text {
+  color: white;
+  font-size: 20px;
+}
 
 /**
  * Фильтры объявления
