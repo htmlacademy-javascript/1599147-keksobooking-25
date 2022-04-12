@@ -1,9 +1,12 @@
 
 import { disableForm, enableForm, prepareOfferForm, disableSlider, enableSlider } from './form/form.js';
 import { getMapId } from './map/map-config.js';
-import { mapInit, mapAddLayer, mapInitMainMarker, mapInitOfferMarkers } from './map/map.js';
+import { mapInit, mapAddLayer, mapInitMainMarker, mapInitOfferMarkers, createRemoveMarkerPopUp, createLayerGroup } from './map/map.js';
 import { loadData } from './server.js';
 import { createSuccessFormPopup, createErrorFormPopup, createLoadErrorPopup } from './alert-popup.js';
+import { createFilteredDataset } from './map/map-filter.js';
+import { debounce } from './utils/utils.js';
+
 
 const offerForm = document.querySelector('.ad-form');
 const filterForm = document.querySelector('.map__filters');
@@ -35,13 +38,37 @@ const initForm = () => {
 
 const mapObject = mapInit(getMapId(), initForm);
 mapAddLayer(mapObject);
+
+const layerGroup = createLayerGroup(mapObject);
+
 mapInitMainMarker(mapObject, offerForm);
 
-const initOfferMarkers = mapInitOfferMarkers(mapObject, cardContent);
+const initOfferMarkers = mapInitOfferMarkers(mapObject, cardContent, layerGroup);
+
+const removeMarkerPopUp = createRemoveMarkerPopUp(mapContainer);
+
+const filterDataset = createFilteredDataset(filterForm);
+
+const changeFilterHandler = (dataSet) => {
+  removeMarkerPopUp();
+  layerGroup.clearLayers();
+  initOfferMarkers(filterDataset(dataSet));
+  // initOfferMarkers(debounsedFilterDataset(dataSet));
+};
+
+const debounseFilterHandler = debounce((dataset) => changeFilterHandler(dataset));
+
+const filterOffset = (dataSet) => {
+  filterForm.addEventListener('change', () => {
+    // changeFilterHandler(dataSet);
+    debounseFilterHandler(dataSet);
+  });
+};
 
 const successLoadDataHandler = (offers) => {
   initOfferMarkers(offers);
   enableForm(filterForm);
+  filterOffset(offers);
 };
 
 const errorLoadHandler= createLoadErrorPopup(mapContainer, reloadMapCallback);
