@@ -6,6 +6,8 @@ import { resetMainMarker } from '../map/map.js';
 import { offerValidation, createOfferPristineObject } from './validate-form.js';
 import { postData } from '../server.js';
 import { createSliderObject, setSliderListeners } from '../slider/slider.js';
+import { resetMapFilter } from '../map/map-filter.js';
+
 
 const places = getOfferPlaces();
 const fileTypes = getUploadFilesType();
@@ -137,14 +139,13 @@ const prepareOfferForm = (offerForm, filterForm, successPopup, errorPopup) => {
     resetMainMarker(offerForm);
   };
 
-  // const delayedResetForm = () => setTimeout(resetForm, 0);
   const delayedResetForm = debounce(resetForm);
-
 
   const successSendFormHandler = () => {
     successPopup();
     offerForm.reset();
-    filterForm.reset();
+    resetMapFilter(filterForm);
+    // filterForm.reset();
     delayedResetForm(offerForm);
   };
 

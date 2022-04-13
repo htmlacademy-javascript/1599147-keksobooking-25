@@ -70,4 +70,10 @@ const createFilteredDataset = (filterForm) => {
   return (dataset) => dataset.filter(filter).sort(rankFeatures);
 };
 
-export { createResetFilter, createFilteredDataset };
+const resetMapFilter = (mapFilter) => {
+  const changeEvent = new Event('change');
+  mapFilter.reset();
+  mapFilter.dispatchEvent(changeEvent);
+};
+
+export { createResetFilter, createFilteredDataset, resetMapFilter };
