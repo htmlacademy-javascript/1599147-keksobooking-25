@@ -77,4 +77,4 @@ function reloadMapCallback() {loadData( successLoadDataHandler, errorLoadHandler
 
 loadData(successLoadDataHandler, errorLoadHandler);
 
-prepareOfferForm(offerForm, openSuccessFormPopup, openErrorFormPopup);
+prepareOfferForm(offerForm, filterForm, openSuccessFormPopup, openErrorFormPopup);

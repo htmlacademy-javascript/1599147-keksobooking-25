@@ -117,7 +117,7 @@ const offerUploadListener = (inputTarget, imgWrapper) => {
 const resetAvatar = (element) => element.setAttribute('src', getAvatarSrc());
 const resetOfferImg = (element) => element.querySelectorAll('img').forEach((el) => { el.remove(); });
 
-const prepareOfferForm = (offerForm, successPopup, errorPopup) => {
+const prepareOfferForm = (offerForm, filterForm, successPopup, errorPopup) => {
   const offerPristineObject = createOfferPristineObject(offerForm);
   const formElementList = getOfferFormElements(offerForm);
 
@@ -144,6 +144,7 @@ const prepareOfferForm = (offerForm, successPopup, errorPopup) => {
   const successSendFormHandler = () => {
     successPopup();
     offerForm.reset();
+    filterForm.reset();
     delayedResetForm(offerForm);
   };
 
