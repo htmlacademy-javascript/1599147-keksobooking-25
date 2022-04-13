@@ -1,7 +1,6 @@
 import { getMapInitCenter, getMapInitScale, getMapLayer, getMapAttribution, getMapMainIcon, getMapIcon, getMapMaxPin } from './map-config.js';
 import { setOfferAddress } from '../form/form.js';
 import { fillCardData } from './map-popup.js';
-import { getNonUnicRangomArray } from '../utils/utils.js';
 
 const mapCenterPoint = getMapInitCenter();
 const mainMarkerIcon = L.icon(getMapMainIcon());
@@ -19,6 +18,8 @@ const mapAddLayer = (map) => {
     },
   ).addTo(map);
 };
+
+const createLayerGroup = (map) => L.layerGroup().addTo(map);
 
 const createMarker = (location, icon, draggable=false) => L.marker(location,
   {
@@ -45,18 +46,24 @@ const resetMainMarker = (form) => {
   setOfferAddress(form)(mapCenterPoint);
 };
 
-const mapSetOfferMarker = (map, template) => (offerItem) => {
+const mapSetOfferMarker = (map, template, layer) => (offerItem) => {
   const { lat, lng, } = offerItem.location;
   const offerMarker = createMarker({
     lat,
     lng,
   }, markerIcon);
-  offerMarker.addTo(map).bindPopup(fillCardData(template, offerItem));
+  offerMarker.addTo(layer).bindPopup(fillCardData(template, offerItem));
 };
 
-const mapInitOfferMarkers = (map, template) => {
-  const initMarkerItem = mapSetOfferMarker(map, template);
-  return  (offers) => getNonUnicRangomArray(offers, MAX_VISIBLE_MARKER).forEach((element) => { initMarkerItem(element);});
+const mapInitOfferMarkers = (map, template, layer) => {
+  const initMarkerItem = mapSetOfferMarker(map, template, layer);
+  return (offers) => offers.slice(0, MAX_VISIBLE_MARKER).forEach((element) => { initMarkerItem(element); });
 };
 
-export { mapInit, mapAddLayer, mapInitMainMarker, mapInitOfferMarkers, resetMainMarker };
+const createRemoveMarkerPopUp = (mapArea) => () => {
+  const popup = mapArea.querySelector('.leaflet-popup');
+  if (popup) { popup.remove(); }
+};
+
+
+export { mapInit, mapAddLayer, mapInitMainMarker, mapInitOfferMarkers, resetMainMarker, createRemoveMarkerPopUp, createLayerGroup };

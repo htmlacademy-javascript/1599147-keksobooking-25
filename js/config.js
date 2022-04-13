@@ -83,6 +83,21 @@ const placeFeatures = [
   'conditioner',
 ];
 
+const PRICE_FILTER_LIMIT = {
+  low: {
+    MAX: 10000,
+  },
+  middle: {
+    MIN: 10000,
+    MAX: 50000,
+  },
+  high: {
+    MIN: 50000,
+  },
+};
+
+const DEFAULT_FILTER_VALUE = 'any';
+
 const placesMap = new Map();
 places.forEach((value) => { placesMap.set(value.kind, value); });
 
@@ -98,5 +113,7 @@ const getGlobalMinPrice = () => GLOBAL_MIN_PRICE;
 const getGlobalMaxPrice = () => GLOBAL_MAX_PRICE;
 const getServerURL = () => API_URL;
 const getMaxMapOffer = () => MAX_MAP_OFFER;
+const getPriceFilterLimit = () => PRICE_FILTER_LIMIT;
+const getDefaultFilterValue = () => DEFAULT_FILTER_VALUE;
 
-export { getCheckinTime, getCheckoutTime, getFeatures, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer };
+export { getCheckinTime, getCheckoutTime, getFeatures, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer, getPriceFilterLimit, getDefaultFilterValue };
