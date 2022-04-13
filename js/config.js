@@ -98,6 +98,16 @@ const PRICE_FILTER_LIMIT = {
 
 const DEFAULT_FILTER_VALUE = 'any';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+const AVATAR_SRC = 'img/muffin-grey.svg';
+
+const offerPreviewSettings = {
+  WIDTH: '70',
+  HEIGHT: '70',
+  alt: 'Фотография жилья',
+};
+
 const placesMap = new Map();
 places.forEach((value) => { placesMap.set(value.kind, value); });
 
@@ -115,5 +125,8 @@ const getServerURL = () => API_URL;
 const getMaxMapOffer = () => MAX_MAP_OFFER;
 const getPriceFilterLimit = () => PRICE_FILTER_LIMIT;
 const getDefaultFilterValue = () => DEFAULT_FILTER_VALUE;
+const getUploadFilesType = () => FILE_TYPES;
+const getAvatarSrc = () => AVATAR_SRC;
+const getOfferPreviewSettings = () => offerPreviewSettings;
 
-export { getCheckinTime, getCheckoutTime, getFeatures, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer, getPriceFilterLimit, getDefaultFilterValue };
+export { getCheckinTime, getCheckoutTime, getFeatures, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer, getPriceFilterLimit, getDefaultFilterValue, getUploadFilesType, getAvatarSrc, getOfferPreviewSettings };

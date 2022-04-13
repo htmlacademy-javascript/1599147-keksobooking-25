@@ -8,6 +8,10 @@ const getOfferFormElements = (form) => ({
   checkIn: form.querySelector('#timein'),
   checkOut: form.querySelector('#timeout'),
   priceSlider: form.querySelector('.ad-form__slider'),
+  avatarInput: form.querySelector('#avatar'),
+  avatarPreviewImg: form.querySelector('.ad-form-header__preview img'),
+  offerImgInput: form.querySelector('.ad-form__upload #images'),
+  offerImgWrapper: form.querySelector('.ad-form__photo'),
 });
 
 const ADDRESS_PRECISION = 5;
