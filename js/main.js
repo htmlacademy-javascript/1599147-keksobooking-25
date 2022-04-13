@@ -56,7 +56,7 @@ const changeFilterHandler = (dataSet) => {
   // initOfferMarkers(debounsedFilterDataset(dataSet));
 };
 
-const debounseFilterHandler = debounce((dataset) => changeFilterHandler(dataset));
+const debounseFilterHandler = debounce(changeFilterHandler);
 
 const filterOffset = (dataSet) => {
   filterForm.addEventListener('change', () => {
