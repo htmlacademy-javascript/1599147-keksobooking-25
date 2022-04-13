@@ -12,13 +12,6 @@ const priceLimits = getPriceFilterLimit();
 
 const getCheckedFeatures = (filterForm) =>  filterForm.querySelectorAll('[name="features"]:checked');
 
-const changeEvent = new Event('change');
-
-const createResetFilter = (filterForm) => () => {
-  filterForm.reset();
-  filterForm.dispatchEvent(changeEvent);
-};
-
 const checkFilterItem = (elementValue, filterValue) => (filterValue === getDefaultFilterValue() || String(filterValue) === String(elementValue));
 
 const checkPriceFilter = (elementValue, filterValue) => {
@@ -76,4 +69,4 @@ const resetMapFilter = (mapFilter) => {
   mapFilter.dispatchEvent(changeEvent);
 };
 
-export { createResetFilter, createFilteredDataset, resetMapFilter };
+export { createFilteredDataset, resetMapFilter };
