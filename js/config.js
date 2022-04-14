@@ -38,7 +38,7 @@ const places = [
   },
 ];
 
-const roomsCapacity = [
+const roomsCapacities = [
   { roomValue: '1',
     MIN: 1,
     MAX: 1,
@@ -61,28 +61,19 @@ const roomsCapacity = [
   },
 ];
 
-const CHECK_IN_TIME = [
+const CHECK_IN_TIMES = [
   '12:00',
   '13:00',
   '14:00',
 ];
 
-const CHECK_OUT_TIME = [
+const CHECK_OUT_TIMES = [
   '12:00',
   '13:00',
   '14:00',
 ];
 
-const placeFeatures = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner',
-];
-
-const PRICE_FILTER_LIMIT = {
+const PRICE_FILTER_LIMITS = {
   low: {
     MAX: 10000,
   },
@@ -111,21 +102,20 @@ const placesMap = new Map();
 places.forEach((value) => { placesMap.set(value.kind, value); });
 
 const roomsCapacityMap = new Map();
-roomsCapacity.forEach((value) => {roomsCapacityMap.set(value.roomValue, value);});
+roomsCapacities.forEach((value) => {roomsCapacityMap.set(value.roomValue, value);});
 
 const getOfferPlaces = () => placesMap;
 const getRoomsCapacity = () => roomsCapacityMap;
-const getCheckinTime = () => CHECK_IN_TIME;
-const getCheckoutTime = () => CHECK_OUT_TIME;
-const getFeatures = () => placeFeatures;
+const getCheckinTime = () => CHECK_IN_TIMES;
+const getCheckoutTime = () => CHECK_OUT_TIMES;
 const getGlobalMinPrice = () => GLOBAL_MIN_PRICE;
 const getGlobalMaxPrice = () => GLOBAL_MAX_PRICE;
 const getServerURL = () => API_URL;
 const getMaxMapOffer = () => MAX_MAP_OFFER;
-const getPriceFilterLimit = () => PRICE_FILTER_LIMIT;
+const getPriceFilterLimit = () => PRICE_FILTER_LIMITS;
 const getDefaultFilterValue = () => DEFAULT_FILTER_VALUE;
 const getUploadFilesType = () => FILE_TYPES;
 const getAvatarSrc = () => AVATAR_SRC;
 const getOfferPreviewSettings = () => offerPreviewSettings;
 
-export { getCheckinTime, getCheckoutTime, getFeatures, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer, getPriceFilterLimit, getDefaultFilterValue, getUploadFilesType, getAvatarSrc, getOfferPreviewSettings };
+export { getCheckinTime, getCheckoutTime, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer, getPriceFilterLimit, getDefaultFilterValue, getUploadFilesType, getAvatarSrc, getOfferPreviewSettings };
