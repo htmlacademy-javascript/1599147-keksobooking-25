@@ -11,8 +11,6 @@ import { debounce } from './utils/utils.js';
 const offerForm = document.querySelector('.ad-form');
 const filterForm = document.querySelector('.map__filters');
 const cardContent = document.querySelector('#card').content.querySelector('.popup');
-// const sliderElement = document.querySelector('.ad-form__slider');
-// const inputElement = offerForm.querySelector('#price');
 const templateSuccessFormPopup = document.querySelector('#success').content.querySelector('.success');
 const templateErrorFormPopup = document.querySelector('#error').content.querySelector('.error');
 const popupFormDestination = document.body;
@@ -53,14 +51,12 @@ const changeFilterHandler = (dataSet) => {
   removeMarkerPopUp();
   layerGroup.clearLayers();
   initOfferMarkers(filterDataset(dataSet));
-  // initOfferMarkers(debounsedFilterDataset(dataSet));
 };
 
-const debounseFilterHandler = debounce((dataset) => changeFilterHandler(dataset));
+const debounseFilterHandler = debounce(changeFilterHandler);
 
 const filterOffset = (dataSet) => {
   filterForm.addEventListener('change', () => {
-    // changeFilterHandler(dataSet);
     debounseFilterHandler(dataSet);
   });
 };
@@ -77,4 +73,4 @@ function reloadMapCallback() {loadData( successLoadDataHandler, errorLoadHandler
 
 loadData(successLoadDataHandler, errorLoadHandler);
 
-prepareOfferForm(offerForm, openSuccessFormPopup, openErrorFormPopup);
+prepareOfferForm(offerForm, filterForm, openSuccessFormPopup, openErrorFormPopup);

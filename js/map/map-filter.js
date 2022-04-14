@@ -1,5 +1,4 @@
 import { getPriceFilterLimit, getDefaultFilterValue } from '../config.js';
-// import { debounce } from '../utils/utils.js';
 
 const getMapFilterElements = (filterForm) => ({
   type: filterForm.querySelector('#housing-type'),
@@ -11,13 +10,6 @@ const getMapFilterElements = (filterForm) => ({
 const priceLimits = getPriceFilterLimit();
 
 const getCheckedFeatures = (filterForm) =>  filterForm.querySelectorAll('[name="features"]:checked');
-
-const changeEvent = new Event('change');
-
-const createResetFilter = (filterForm) => () => {
-  filterForm.reset();
-  filterForm.dispatchEvent(changeEvent);
-};
 
 const checkFilterItem = (elementValue, filterValue) => (filterValue === getDefaultFilterValue() || String(filterValue) === String(elementValue));
 
@@ -66,8 +58,13 @@ const createCompareFeaturesRank = (filterForm) => {
 const createFilteredDataset = (filterForm) => {
   const filter = createCheckFiltredElement(filterForm);
   const rankFeatures = createCompareFeaturesRank(filterForm);
-  // return debounce((dataset) => dataset.filter(filter).sort(rankFeatures));
   return (dataset) => dataset.filter(filter).sort(rankFeatures);
 };
 
-export { createResetFilter, createFilteredDataset };
+const resetMapFilter = (mapFilter) => {
+  const changeEvent = new Event('change');
+  mapFilter.reset();
+  mapFilter.dispatchEvent(changeEvent);
+};
+
+export { createFilteredDataset, resetMapFilter };
