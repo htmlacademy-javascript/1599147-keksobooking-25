@@ -61,13 +61,13 @@ const roomsCapacity = [
   },
 ];
 
-const CHECK_IN_TIME = [
+const CHECK_IN_TIMES = [
   '12:00',
   '13:00',
   '14:00',
 ];
 
-const CHECK_OUT_TIME = [
+const CHECK_OUT_TIMES = [
   '12:00',
   '13:00',
   '14:00',
@@ -82,7 +82,7 @@ const placeFeatures = [
   'conditioner',
 ];
 
-const PRICE_FILTER_LIMIT = {
+const PRICE_FILTER_LIMITS = {
   low: {
     MAX: 10000,
   },
@@ -115,14 +115,14 @@ roomsCapacity.forEach((value) => {roomsCapacityMap.set(value.roomValue, value);}
 
 const getOfferPlaces = () => placesMap;
 const getRoomsCapacity = () => roomsCapacityMap;
-const getCheckinTime = () => CHECK_IN_TIME;
-const getCheckoutTime = () => CHECK_OUT_TIME;
+const getCheckinTime = () => CHECK_IN_TIMES;
+const getCheckoutTime = () => CHECK_OUT_TIMES;
 const getFeatures = () => placeFeatures;
 const getGlobalMinPrice = () => GLOBAL_MIN_PRICE;
 const getGlobalMaxPrice = () => GLOBAL_MAX_PRICE;
 const getServerURL = () => API_URL;
 const getMaxMapOffer = () => MAX_MAP_OFFER;
-const getPriceFilterLimit = () => PRICE_FILTER_LIMIT;
+const getPriceFilterLimit = () => PRICE_FILTER_LIMITS;
 const getDefaultFilterValue = () => DEFAULT_FILTER_VALUE;
 const getUploadFilesType = () => FILE_TYPES;
 const getAvatarSrc = () => AVATAR_SRC;
