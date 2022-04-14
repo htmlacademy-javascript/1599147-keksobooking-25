@@ -73,15 +73,6 @@ const CHECK_OUT_TIMES = [
   '14:00',
 ];
 
-// const placeFeatures = [
-//   'wifi',
-//   'dishwasher',
-//   'parking',
-//   'washer',
-//   'elevator',
-//   'conditioner',
-// ];
-
 const PRICE_FILTER_LIMITS = {
   low: {
     MAX: 10000,
@@ -117,7 +108,6 @@ const getOfferPlaces = () => placesMap;
 const getRoomsCapacity = () => roomsCapacityMap;
 const getCheckinTime = () => CHECK_IN_TIMES;
 const getCheckoutTime = () => CHECK_OUT_TIMES;
-// const getFeatures = () => placeFeatures;
 const getGlobalMinPrice = () => GLOBAL_MIN_PRICE;
 const getGlobalMaxPrice = () => GLOBAL_MAX_PRICE;
 const getServerURL = () => API_URL;
@@ -128,5 +118,4 @@ const getUploadFilesType = () => FILE_TYPES;
 const getAvatarSrc = () => AVATAR_SRC;
 const getOfferPreviewSettings = () => offerPreviewSettings;
 
-// getFeatures
 export { getCheckinTime, getCheckoutTime, getOfferPlaces, getRoomsCapacity, getGlobalMinPrice, getGlobalMaxPrice, getServerURL, getMaxMapOffer, getPriceFilterLimit, getDefaultFilterValue, getUploadFilesType, getAvatarSrc, getOfferPreviewSettings };
