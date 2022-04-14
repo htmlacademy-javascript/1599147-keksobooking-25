@@ -90,28 +90,37 @@ const avatarUploadListener = (inputTarget, previewTarget) => {
   });
 };
 
-const prepareImgElement = () => {
+const prepareImgElement = (previewSetting) => {
+  const { width, height, alt } = previewSetting;
   const imageElement = document.createElement('img');
-  imageElement.setAttribute('width', offerPreviewSetting.WIDTH);
-  imageElement.setAttribute('height', offerPreviewSetting.HEIGHT);
-  imageElement.setAttribute('alt', offerPreviewSetting.alt);
+  imageElement.setAttribute('width', width);
+  imageElement.setAttribute('height', height);
+  imageElement.setAttribute('alt', alt);
   return imageElement;
+};
+
+const appendPreviewElement = (imgWrapper) => imgWrapper.appendChild(prepareImgElement(offerPreviewSetting));
+
+const findOrCreateImageElement = (imgWrapper) => {
+  const imageElement = imgWrapper.querySelector('img');
+  return imageElement ? imageElement : appendPreviewElement(imgWrapper);
+};
+
+const previewUploadImage = (inputFile, imgWrapper) => {
+  if (!checkUploadFile(inputFile)) {
+    return null;
+  }
+  const image = findOrCreateImageElement(imgWrapper);
+  image.src = URL.createObjectURL(inputFile);
 };
 
 const offerUploadListener = (inputTarget, imgWrapper) => {
   inputTarget.addEventListener('change', () => {
-    const inputFile = inputTarget.files[0];
-    if (checkUploadFile(inputFile)) {
-      let imageElement = imgWrapper.querySelector('img');
-      if (imageElement) {
-        imageElement.src = URL.createObjectURL(inputFile);
-      }
-      else {
-        imageElement = prepareImgElement();
-        imgWrapper.appendChild(imageElement);
-        imageElement.src = URL.createObjectURL(inputFile);
-      }
+    const inputFiles = inputTarget.files;
+    if (inputFiles === null || inputFiles.length === 0) {
+      return null;
     }
+    previewUploadImage(inputFiles[0], imgWrapper);
   });
 };
 
