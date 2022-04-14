@@ -102,8 +102,8 @@ const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const AVATAR_SRC = 'img/muffin-grey.svg';
 
 const offerPreviewSettings = {
-  WIDTH: '70',
-  HEIGHT: '70',
+  width: '70',
+  height: '70',
   alt: 'Фотография жилья',
 };
 
