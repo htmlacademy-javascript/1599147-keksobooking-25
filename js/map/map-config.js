@@ -13,7 +13,7 @@ const MAP_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright
 
 const MAP_MAIN_ICON = {
   iconUrl: 'img/main-pin.svg',
-  iconSizes: [52, 52],
+  iconSize: [52, 52],
   iconAnchor: [26, 52],
 };
 

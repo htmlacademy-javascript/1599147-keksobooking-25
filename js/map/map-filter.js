@@ -45,6 +45,16 @@ const createFeatureRange = (filterForm) => (element) => {
   return placeFeatureRank;
 };
 
+const createIsFeaturesEqual = (filterForm) => (element) => {
+  const selectedFeatures = getCheckedFeatures(filterForm);
+  if (element.offer.features) {
+    for (let i = 0; i < selectedFeatures.length; i++) {
+      if (element.offer.features.indexOf(selectedFeatures[i].value) === -1) { return false; }
+    }
+    return true;
+  }
+};
+
 const createCompareFeaturesRank = (filterForm) => {
   const getFeaturesRank = createFeatureRange(filterForm);
 
@@ -56,9 +66,10 @@ const createCompareFeaturesRank = (filterForm) => {
 };
 
 const createFilteredDataset = (filterForm) => {
+  const isFeaturesEqual = createIsFeaturesEqual(filterForm);
   const filter = createCheckFiltredElement(filterForm);
   const rankFeatures = createCompareFeaturesRank(filterForm);
-  return (dataset) => dataset.filter(filter).sort(rankFeatures);
+  return (dataset) => dataset.filter(filter).filter(isFeaturesEqual).sort(rankFeatures);
 };
 
 const resetMapFilter = (mapFilter) => {
