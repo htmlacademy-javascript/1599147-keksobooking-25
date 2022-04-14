@@ -1,4 +1,3 @@
-// константы и служебные массивы
 const API_URL = 'https://23.javascript.pages.academy/keksobooking';
 
 const MAX_MAP_OFFER = 10;

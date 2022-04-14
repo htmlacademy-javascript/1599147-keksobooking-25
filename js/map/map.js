@@ -30,7 +30,6 @@ const createMarker = (location, icon, draggable=false) => L.marker(location,
 
 const mainMarker = createMarker(mapCenterPoint, mainMarkerIcon, true);
 
-// инициализация маркера на карте
 const mapInitMainMarker = (map, form) => {
   mainMarker.addTo(map);
   const setAddress = setOfferAddress(form);
@@ -41,7 +40,6 @@ const mapInitMainMarker = (map, form) => {
 const resetMarker = (marker, location) => { marker.setLatLng(location); };
 
 const resetMainMarker = (form) => {
-  // const markerPoint = getMapInitCenter();
   resetMarker(mainMarker, mapCenterPoint);
   setOfferAddress(form)(mapCenterPoint);
 };
@@ -64,6 +62,5 @@ const createRemoveMarkerPopUp = (mapArea) => () => {
   const popup = mapArea.querySelector('.leaflet-popup');
   if (popup) { popup.remove(); }
 };
-
 
 export { mapInit, mapAddLayer, mapInitMainMarker, mapInitOfferMarkers, resetMainMarker, createRemoveMarkerPopUp, createLayerGroup };

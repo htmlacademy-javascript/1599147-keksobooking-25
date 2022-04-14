@@ -1,4 +1,3 @@
-// модуль работы с формой
 import { getOfferPlaces, getUploadFilesType, getOfferPreviewSettings, getAvatarSrc } from '../config.js';
 import { getOfferFormElements, getAddressPrecision  } from './form-config.js';
 import { formatAddressByLocation, debounce } from '../utils/utils.js';
@@ -145,7 +144,6 @@ const prepareOfferForm = (offerForm, filterForm, successPopup, errorPopup) => {
     successPopup();
     offerForm.reset();
     resetMapFilter(filterForm);
-    // filterForm.reset();
     delayedResetForm(offerForm);
   };
 

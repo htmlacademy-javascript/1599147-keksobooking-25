@@ -1,5 +1,4 @@
 import { getPriceFilterLimit, getDefaultFilterValue } from '../config.js';
-// import { debounce } from '../utils/utils.js';
 
 const getMapFilterElements = (filterForm) => ({
   type: filterForm.querySelector('#housing-type'),
@@ -59,7 +58,6 @@ const createCompareFeaturesRank = (filterForm) => {
 const createFilteredDataset = (filterForm) => {
   const filter = createCheckFiltredElement(filterForm);
   const rankFeatures = createCompareFeaturesRank(filterForm);
-  // return debounce((dataset) => dataset.filter(filter).sort(rankFeatures));
   return (dataset) => dataset.filter(filter).sort(rankFeatures);
 };
 
